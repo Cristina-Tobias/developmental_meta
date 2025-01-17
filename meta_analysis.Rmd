@@ -1,0 +1,284 @@
+---
+title: "A systematic review of short-term and working memory abilities in children with intellectual disability; to what extent do the result support the delay or difference hypotheses? "
+author: "Cris"
+date: "2025-01-17"
+output: rmdformats::readthedown
+---
+```{r import libraries, include=FALSE, warning=FALSE}
+library(metafor)
+library(readxl)
+library(janitor)
+library(reshape)
+library(metafor)
+library(metaviz)
+library(readr)
+library(ggplot2)
+library(ggthemes)
+library(patchwork)
+library(TOSTER)
+library(dplyr)
+library(tidyr)
+library(devtools)
+library(ggrepel)
+# devtools::install_github("MathiasHarrer/dmetar")
+library(dmetar)
+```
+
+```{r create visualization functions, include=FALSE, warning=FALSE}
+
+# This function takes effect size data and standard errors from a reported meta-analysis
+
+ma_pipe_sei <-
+  function(dat,
+           true_effect,
+           rep_upper,
+           rep_lower,
+           plot = TRUE) {
+    dat <- read.csv(dat) # Read the file 
+    res <- rma(yi,
+               sei = sei,
+               data = dat,
+               method = "DL") # Perform a meta-analysis
+    sunset <-  viz_sunset(
+      x = dat[, c("yi", "sei")],
+      contours = FALSE,
+      true_effect = true_effect,
+      power_contours = "continuous"
+    ) # Create sunset plot
+    dat[["power_observed"]] <-
+      (1 - stats::pnorm(stats::qnorm(1 - 0.05 / 2) * dat[["sei"]],
+                        abs(true_effect), dat[["sei"]])) +
+      stats::pnorm(stats::qnorm(0.05 / 2) *
+                     dat[["sei"]], abs(true_effect),
+                   dat[["sei"]]) # Calculate power for each study
+    dat[["power_e33"]] <-
+      (1 - stats::pnorm(stats::qnorm(1 - 0.05 / 2) * dat[["sei"]],
+                        abs(0.33), dat[["sei"]])) +
+      stats::pnorm(stats::qnorm(0.05 / 2) *
+                     dat[["sei"]], abs(0.33),
+                   dat[["sei"]]) # Calculate power for each study for an effect of 0.33
+    dat[["power_e66"]] <-
+      (1 - stats::pnorm(stats::qnorm(1 - 0.05 / 2) * dat[["sei"]],
+                        abs(0.66), dat[["sei"]])) +
+      stats::pnorm(stats::qnorm(0.05 / 2) *
+                     dat[["sei"]], abs(0.66),
+                   dat[["sei"]]) # Calculate power for each study for an effect of 0.66
+    power_median_dat <- data.frame(observed=numeric(1),e33=numeric(1),e66=numeric(1))
+    power_median_dat[["observed"]] <- median(dat[["power_observed"]])
+    power_median_dat[["e33"]] <- median(dat[["power_e33"]])
+    power_median_dat[["e66"]] <- median(dat[["power_e66"]])
+    power_median_dat <- as.data.frame(power_median_dat)
+    power_median_dat <- mutate(power_median_dat) # Calculate median power
+    rep_se <-
+      ((rep_upper) - (rep_lower)) / (2 * 1.96) # Calculate SE for the summary effect
+    sink("/dev/null")
+    et <- TOSTmeta(
+      ES = true_effect,
+      se = rep_se,
+      low_eqbound_d = -0.2,
+      high_eqbound_d = 0.2,
+      plot = TRUE
+    ) # Perform an equivalence test
+    et <- as.data.frame(et)
+
+    sink()
+    if (plot == TRUE) {
+      effect_size <- et$ES
+      et <- as.data.frame(et)
+      et_plot <-
+        ggplot(et,
+               aes(
+                 x = "",
+                 y = ES,
+                 ymin = low_eqbound_d,
+                 ymax = high_eqbound_d
+               )) +
+        geom_hline(aes(yintercept = 0), linetype = 'solid', size = 0.5) +
+        geom_linerange(size = 5,
+                       colour = "#00AFBB",
+                       alpha = 0.5) +
+        annotate(
+          geom = "point",
+          x = "",
+          y = effect_size,
+          color = "black",
+          shape = 18,
+          size = 4
+        ) +
+        theme(axis.text.x = element_text(size = 8)) +
+        coord_flip() +
+        theme_minimal() +
+        theme(strip.text = element_text(
+          size = 8,
+          face = "bold",
+          angle = 90
+        )) +
+        theme(strip.background = element_rect(colour = "black", fill = "white")) +
+        theme(axis.title.y = element_text(face = "bold", size = 12)) +
+        theme(axis.title.x = element_text(face = "bold", size = 12)) +
+        theme(axis.title.y = element_blank()) +
+        ylab(expression("Effect size"))
+      et_plot <-
+        et_plot + geom_linerange(aes(ymin = UL_CI_ZTEST, ymax = LL_CI_ZTEST), size = 0.5)
+      et_plot <-
+        et_plot + geom_linerange(aes(ymin = UL_CI_TOST, ymax = LL_CI_TOST),
+                                 size = 1.5,
+                                 colour = "black")
+      et_plot # Creates an equivalence test plot
+    }
+    
+    value <- list(
+      res = res,
+      dat = dat,
+      power_median_dat = power_median_dat,
+      sunset = sunset,
+      et = et,
+      et_plot = et_plot
+    ) # Create a list of output objects
+    attr(value, "class") <- "ma_pipe_sei"
+    value
+  }
+
+
+# This function takes equivalence test results from the first function to create an equivalence test forest plot
+
+combine_et <- function(dat){
+    et_plot_combine <-
+      ggplot(dat,
+             aes(
+               x = reorder(authors, -yi),
+               y = yi,
+               ymin = -0.6,
+               ymax = 0.6
+             )) +
+      geom_rect(xmin = -Inf, ymin = -0.1, xmax = Inf, ymax = 0.1,
+                fill = "#00AFBB", alpha = 0.2) +
+      geom_rect(xmin = -Inf, ymin = -0.2, xmax = Inf, ymax = 0.2,
+                fill = "#00AFBB", alpha = 0.1) +
+      geom_rect(xmin = -Inf, ymin = -0.5, xmax = Inf, ymax = 0.5,
+                fill = "#00AFBB", alpha = 0.05) +
+      geom_point(color = "black",
+                 shape = 18,
+                 size = 4) +
+      theme(axis.text.x = element_text(size = 8)) +
+      coord_flip() +
+      theme_minimal() +
+      theme(strip.text = element_text(
+        size = 8,
+        face = "bold",
+        angle = 90
+      )) +
+      theme(strip.background = element_rect(colour = "black", fill = "white")) +
+      theme(axis.title.y = element_text(face = "bold", size = 12)) +
+      theme(axis.title.x = element_text(face = "bold", size = 12)) +
+      theme(axis.title.y = element_blank()) +
+      ylab(expression("Effect size"))
+    et_plot_combine <-
+      et_plot_combine + geom_linerange(aes(ymin = -1, ymax = 0), size = 0.5)
+    et_plot_combine <-
+      et_plot_combine + geom_linerange(aes(ymin = -0.75, ymax = -0.25),
+                                       size = 1.5,
+                                       colour = "black")
+    et_plot_combine <-
+      et_plot_combine + scale_y_continuous(breaks=c(-.5, -.20,-.1, 0, .1, 0.2, 0.5))
+    et_plot_combine <-
+      et_plot_combine + geom_hline(yintercept=0, linetype="dashed", color = "black")
+    et_plot_combine # Creates an equivalence test plot
+  }
+```
+
+```{r data reading and cleaning, include=FALSE, warning=FALSE}
+data <- read_excel('/home/cris/Downloads/data_extraction.xlsx', col_names =FALSE)
+names <- data[2,]
+colnames(data) <- names
+data <- data[3:dim(data)[1],]
+data <- data[-8,] #this will leave in the final code
+data <- clean_names(data)
+data <- data[!duplicated(data), ]
+
+
+columns_of_interest <- c('year', 'sample_size_id_n', 'chronological_age_id_m', 'chronological_age_id_sd',
+                         'mental_age_id_m', 'mental_age_id_sd',
+                         'iq_id_m', 'iq_id_sd',
+                         'sample_size_controls_n',  'chronological_age_controls_m', 'chronological_age_controls_sd',
+                         'mental_age_controls_m', 'mental_age_controls_sd',
+                         'iq_controls_m', 'iq_controls_sd', 
+                         'task_1_mean_control_group','task_1_mean_id_group', 'task_1_sd_control_group',
+                         'task_1_sd_id_group', 'task_1_n_control_group','task_1_n_id_group',
+                         'task_2_mean_control_group','task_2_mean_id_group', 'task_2_sd_control_group',
+                         'task_2_sd_id_group', 'task_2_n_control_group','task_2_n_id_group'
+                         )
+
+data[, columns_of_interest] <- lapply(data[, columns_of_interest], as.numeric)
+
+stats_test_1 <- escalc(
+    m2i = task_1_mean_control_group,
+    m1i = task_1_mean_id_group,
+    sd2i = task_1_sd_control_group,
+    sd1i = task_1_sd_id_group,
+    n2i = task_1_n_control_group,
+    n1i = task_1_n_id_group,
+    data = data,
+    append = TRUE,
+    measure = 'SMD1H'
+  )
+
+stats_test_2 <- escalc(
+    m2i = task_2_mean_control_group,
+    m1i = task_2_mean_id_group,
+    sd2i = task_2_sd_control_group,
+    sd1i = task_2_sd_id_group,
+    n2i = task_2_n_control_group,
+    n1i = task_2_n_id_group,
+    data = data,
+    append = TRUE,
+    measure = 'SMD1H'
+  )
+
+ma_model_1 <- rma(yi, vi, data = stats_test_1)
+ma_model_2 <- rma(yi, vi, data = stats_test_2)
+```
+
+
+## Aim
+
+The aim of the study is to investigate if short-term and working memory abilities exhibit a developmentally delayed or developmentally different pattern in children with ID.  This will be done by an overall analysis and subgroup analyses based on type of memory (short-term or working memory), aetiology of ID (familial or organic). In addition, the overall analysis will also be repeated with level of IQ as a moderator. 
+
+### Research questions
+
+1. Do short-term and working memory abilities exhibit a developmentally delayed or developmentally different pattern in children with ID (compared to mental age matched groups)? 
+1.1 Is this pattern moderated by origin of ID (familial and organic) or level of IQ?
+2. Do origin (familial and organic) of ID or level of IQ moderate whether STM and WM performance are delayed or different?
+
+### Hypotheses
+
+1. The STM delay hypothesis will be supported if STM performance of participants with ID will not differ significantly from that of the mental age-matched group 
+
+2. The WM delay hypothesis will be supported if WM performance of participants with ID will not differ significantly from that of the mental age-matched group 
+
+3. The STM difference hypothesis will be supported if STM performance of participants with ID will differ significantly from that of the mental age-matched group. We expect that the difference may occur in any direction. 
+
+4. The WM difference hypothesis will be supported if WM performance of participants with ID will differ significantly from that of the mental age-matched group. We expect that the difference may occur in any direction. 
+
+## Methods
+
+We conducted and reported this systematic review according to NIRO-SR guidelines for conducting and reporting systematic reviews of non-intervention research (REF).
+See table X for descriptives of the obtained studies.
+
+```{r descriptives, warning=FALSE}
+head(data)
+summary(data[, columns_of_interest])
+```
+
+Here are the plots for the first test
+
+```{r plots first test}
+
+combine_et(stats_test_1)
+```
+
+```{r plots second test}
+
+combine_et(stats_test_2)
+```
+
