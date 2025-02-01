@@ -26,6 +26,7 @@ library(dmetar)
 library(naniar)
 library(skimr)
 library(psych)
+library(utils)
 ```
 
 ```{r create visualization functions from dsquintana, include=FALSE, warning=FALSE}
@@ -485,6 +486,7 @@ for (id in c("inhibition", "updating", "shifting", "fluency", 'attention', 'othe
 
 
 ```
+
 ### Equivalence testing
 The studies looked at different types of executive functions (CHANGE THIS LATER TO SUIT OUR OWN ANALYSIS). In the next table you can see the extracted descriptives separated by executive function
 
@@ -623,6 +625,8 @@ tile
 
 # Combine the two plots
 com1 + tile
+
+sessionInfo()
 
 ```
 
