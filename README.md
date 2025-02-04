@@ -3,7 +3,9 @@ children with intellectual disability; to what extent do the result
 support the delay or difference hypotheses?
 ================
 Cris
-Last Updated: 01, February, 2025 at 13:31
+Last Updated: 04, February, 2025 at 18:10
+
+## Introduction
 
 ## Aim
 
@@ -47,16 +49,122 @@ analysis will also be repeated with level of IQ as a moderator.
 
 ### Data extraction
 
-We extracted data from stuff
+We conducted and reported this systematic review according to NIRO-SR
+guidelines for conducting and reporting systematic reviews of
+non-intervention research (Topor & Pickering et al., 2023). Elements
+pertaining to the method and results of the meta-analysis were reported
+following the PRISMA 2020 guidelines (Page et al., 2021).
+
+### Search Strategy
+
+To capture all studies relevant to our research questions we conducted
+literature searches in the following databases: MEDLINE PubMed Central
+(PMC), and NCBI Bookshelf, through PUBMED, SCOPUS (Elsevier), Web of
+Science Core Collection (All Editions), ERIC and PsycINFO through
+EBSCOHost. All databases were accessed through the Linköping University
+library.
+
+Further, we searched grey literature through the SCOPUS database,
+including the preprint feature, as well as Google Scholar and BASE
+(Bielefeld Academic Search Engine) for additional grey literature. For
+search in Google Scholar, we limited the retrieval of references to the
+first 500 hits to ensure relevance and limit redundancy. We also
+performed backward and forward reference searches of the included
+studies, which we conducted in Lens.org. Lastly, we screened references
+from systematic reviews that were caught during the literature search
+looking for studies that fell within our inclusion criteria, also done
+in Lens.org.
+
+Database specific search strings are available in the project’s OSF
+(Supplement XX Search Strategy). The general search terms that were used
+are:
+
+- Population – diagnosis: intellectual disability, Trisomy 21, Fragile
+  X, Williams syndrome, 22q11.2 deletion syndrome, Angelmans syndrome,
+  Retts syndrome, Prader Willis syndrome, CHARGE syndrome, Cri du chat
+  syndrome, Dandy-Walker Syndrome, Tuberous sclerosis, Wiedemann-Steiner
+
+- Population – age: children, adolescent, under 18
+
+- Independent variable: mental age match
+
+- Dependent variable: short term memory, working memory
 
 ### Statistical analysis
 
-We tested the difference in performance moderating for type of task and
-also for type of ID
+All statistical analyses and data processing were performed using R
+(4.3.1, R Core Team, 2024), and all effect size calculations and coding
+procedures are available on OSF. For the effect size, we calculated
+standardized mean differences (as Hedges’ g) using the metafor package
+(Viechtabuer, 2010). All other packages used to visualise and present
+results are cited in the RMarkdown on OSF. We conducted a multi-level
+random-effects meta-analysis using the restricted maximum likelihood
+variance (tau2) estimator (REML). We conducted separate meta-analyses
+for the following: one meta-analysis including STM tasks, and one
+including WM tasks. Calculated effects are plotted together with their
+95% confidence intervals. See Table 2 for a description of all conducted
+analyses. We conducted a 3-level RE meta-analysis to account for
+multiple effect sizes (i.e., multiple tasks measuring the same outcome)
+nested within studies. Following recommendations by Assink & Wibbelink
+(2016) and Viechtbauer (metafor documentation, Viechtbauer, 2010), we
+modelled random effects for the study level and random effects for the
+tasks nested within those studies.
 
-### Equivalence testing
+To be able to completely answer the primary research question, we
+conducted equivalence tests of the average effect size. Following
+recommendations from Lakens (2017, 2018), we conducted the equivalence
+test using TOSTER package (Caldwell, 2022) to perform two one-sided
+tests (TOST). This allows us to falsify the delay or difference
+hypothesis by assessing if the effects statistically differ and if they
+differ “meaningfully” from no effect (i.e., nil null-hypothesis).
+Meaningful is however a subjective description, and literature has so
+far not focused on establishing guidelines on evaluating the strength of
+the relationship between executive functions and ID population. Thus, we
+decided to set the equivalence bounds to the average effect size of g =
+0.34 found in a meta-analysis by Spaniol & Danielsson (2022). This
+meta-analysis had similar, albeit broader, inclusion criteria, focusing
+on more aspects of executive function. Alpha level was set to α = .05.
 
-Yes
+The criteria to falsify the delay and difference hypotheses for STM and
+WM would be as follows: 1. a statistically nonsignificant and not
+equivalent effect supports the delay hypothesis.
+
+2.  a statistically significant (in any direction) and not equivalent
+    effect supports the difference hypothesis.
+
+3.  a statistically nonsignificant and equivalent effect supports the
+    delay hypothesis.
+
+4.  a statistically significant (in any direction) and equivalent effect
+    would indicate designs that have many participants or otherwise high
+    power to find any effects significant, although not practically
+    meaningful. This finding would again support the delay hypothesis.
+
+Moderator analyses
+
+To address the secondary research questions, we conducted moderator
+analyses using metafor. We conducted a meta-regression with IQ of the ID
+group as a continuous predictor centred around the grand mean of the ID
+group, once for each meta-analysis (i.e., one with STM outcomes and one
+with WM outcomes). Here, the equivalence test was not applicable as only
+the potential presence of the effect of IQ (and not its lack) was
+relevant to our research question.
+
+We also conducted subgroup analyses based on the origin of ID
+(i.e. familial or organic). This solution was appropriate as only if
+there were more than five studies per group\*. We conducted a
+complete-case meta-regression as we expected that potential missing
+values will only be randomly missing (e.g., simply not reported).
+Subgroup analyseis wereas conducted by modelling two independent
+random-effect meta-analyses for each subgroup. Studies with mixed
+populations that did not provide individual estimates for each group
+were excluded from the subgroup analysis. We then compared the effect
+sizes by conducting a fixed-effects meta-analysis of the two estimates,
+essentially conducting a Wald-type test, as suggested by Viechtbauer
+(2024, see Comparing Estimates of Independent Meta-Analyses or
+Subgroups). Agan, the equivalence test was not applicable as only the
+potential presence of the effect of ID origin (and not its lack) was
+relevant to our research question.
 
 ## Results
 
@@ -116,7 +224,8 @@ vis_miss(data[,columns_of_interest])
 
 ### Statistical analysis
 
-We are performing a multilevel analysis
+We are performing a multilevel analysis. When the data is extracted, we
+will separate WM from STM tasks.
 
 ``` r
 overall_3_level <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id), 
@@ -149,7 +258,8 @@ anova(overall_3_level,modelnovar3)
     ## Full     3 287.2253 294.9802 287.4807 -140.6127               434.0747 
     ## Reduced  2 285.2253 290.3953 285.3517 -140.6127 0.0000 1.0000 434.0747
 
-Moderating type of ID
+Moderating type of ID: in our study we will have familial and organic
+ID.
 
 ``` r
 res_DS <- rma(yi, vi, data=stats_test, subset=group_id=="DS")
@@ -265,7 +375,8 @@ for (id in c('DS', 'NSID', 'FXS', 'WS')){
 
 ![](README_files/figure-gfm/plots%20type%20of%20ID,%20-1.png)<!-- -->![](README_files/figure-gfm/plots%20type%20of%20ID,%20-2.png)<!-- -->![](README_files/figure-gfm/plots%20type%20of%20ID,%20-3.png)<!-- -->![](README_files/figure-gfm/plots%20type%20of%20ID,%20-4.png)<!-- -->
 
-Moderating type of executive function
+Moderating type of executive function: in our study we will have WM and
+STM tasks
 
 ``` r
 res_inhibition <- rma(yi, vi, data=stats_test, subset=ef_type=="inhibition")
