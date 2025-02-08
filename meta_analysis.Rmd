@@ -531,11 +531,21 @@ com1 <- com1 + ggtitle("Summary effect sizes and equivalence bounds") +
 
 com1
 
-sessionInfo()
+```
 
+## Sensitivity analysis
+```{r}
+sens_inh <- cooks.distance.rma.mv(res_inhibition)
+sens_att <- cooks.distance.rma.mv(res_attention)
+
+plot(sens_inh, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
+plot(sens_att, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
 ```
 
 
+```{r}
+sessionInfo()
+```
 
 
 
