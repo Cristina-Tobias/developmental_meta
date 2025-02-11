@@ -278,28 +278,32 @@ dfround(dat.comp, 3)
 ```
 
 ```{r plots memory span, fig.dim = c(15, 20)}
-id_tests <- t(data.frame(inhibition = c(res_inhibition$b, res_inhibition$se,res_inhibition$ci.lb, res_inhibition$ci.ub),  #memory span
-                         row.names = c('b', 'se', 'ci.lb', 'ci.ub')))
 
-  df <- stats_test[, c('cite', 'yi', 'sei', 'n_magroup', 'n_id')]
+# Compute confidence intervals and format labels
+
+df <- stats_test[, c('cite', 'yi', 'sei', 'n_magroup', 'n_id')]
   
-  # Compute confidence intervals and format labels
-  
-  df$cite <- paste0(df$cite, '.', ave(df$cite, df$cite, FUN = seq_along))
+df$cite <- paste0(df$cite, '.', ave(df$cite, df$cite, FUN = seq_along))
   df <- df %>%
     mutate(
       lower = yi - 1.96 * sei,  
       upper = yi + 1.96 * sei,  
       ci_text = paste0(round(yi,2), "  [", round(lower, 2), ", ", round(upper, 2), "]")
     )
-  FE_model <- paste0('RE Model for the ', id, ' outcome')
+FE_model <- paste0('RE Model for the memory span outcome')
   df <- df %>%
     arrange(yi)
-  df <- rbind(df, c(FE_model, id_tests[id,'b'], id_tests[id,'se'], '','', 
-                    id_tests[id,'ci.lb'], id_tests[id,'ci.ub'], 
-                    paste0(round(id_tests[id,'b'],2), 
-                           "  [", round(id_tests[id,'ci.lb'], 2), ", ", 
-                           round(id_tests[id,'ci.ub'], 2), "]")))
+  df_2 <- data.frame(cite = FE_model, 
+                     yi = res_inhibition['b'], 
+                     sei = res_inhibition['se'], 
+                     n_magroup = NA_integer_,
+                     n_id = NA_integer_, 
+                     lower= res_inhibition['ci.lb'], 
+                     upper = res_inhibition['ci.ub'], 
+                     ci_text = paste0(round(as.numeric(res_inhibition['b']),2), 
+                           "  [", round(as.numeric(res_inhibition['ci.lb']), 2), ", ", 
+                           round(as.numeric(res_inhibition['ci.ub']), 2), "]"))
+  df <- bind_rows(df, df_2)
   df[, c('yi','sei', 'lower', 'upper')] <- lapply(df[, c('yi','sei', 'lower', 'upper')], as.numeric)
   df$desired_order <- seq(dim(df)[1],1)
   p_right <- ggplot(df, aes(y = reorder(cite, desired_order))) +
@@ -487,7 +491,7 @@ inhibition_results_NSID <- ma_pipe_sei(
 inhibition_et_dat_NSID <- inhibition_results_NSID$et
 
 ## equivalence forest plot
-com1 <- rbind(inhibition_et_dat, attention_et_dat,
+com1 <- rbind(inhibition_et_dat,
               inhibition_et_dat_DS, inhibition_et_dat_NSID)
 
 com1 <- combine_et(com1)
@@ -512,10 +516,10 @@ summary(meta_reg)
 ## Sensitivity analysis
 ```{r}
 sens_inh <- cooks.distance.rma.mv(res_inhibition)
-sens_att <- cooks.distance.rma.mv(res_attention)
+
 
 plot(sens_inh, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
-plot(sens_att, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
+
 ```
 
 
