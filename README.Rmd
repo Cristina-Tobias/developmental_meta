@@ -265,35 +265,23 @@ missing_data
 
 ### Statistical analysis
 
-We are performing a multilevel meta-analysis 
-Meta-analysis per outcome (WM and STM)
+We are performing a multilevel meta-analysis of memory span.
 ```{r tests type of EF}
 res_inhibition <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id), 
-                         subset = ef_type == "inhibition",
-                          tdist = TRUE, data = stats_test) #this will be our STM
-res_attention <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id), 
-                         subset = ef_type == "attention",
-                          tdist = TRUE, data = stats_test) #this will be our WM
+                          tdist = TRUE, data = stats_test) 
 
-dat.comp <- data.frame(alloc    = c("Short-term memory", "Working memory"
-                                    ), 
-                       estimate = c(coef(res_inhibition), coef(res_attention)
-                                    ), 
-                       stderror = c(res_inhibition$se, res_attention$se
-                                    ),
-                       tau2     = c(res_inhibition$tau2, res_attention$tau2
-                                    ))
+dat.comp <- data.frame(estimate = c(coef(res_inhibition)), 
+                       stderror = c(res_inhibition$se),
+                       tau2     = c(res_inhibition$tau2))
 dfround(dat.comp, 3)
 
 ```
 
-```{r plots type of memory, fig.dim = c(15, 20)}
-id_tests <- t(data.frame(inhibition = c(res_inhibition$b, res_inhibition$se,res_inhibition$ci.lb, res_inhibition$ci.ub), #this will be our STM
-                        attention = c(res_attention$b, res_attention$se,res_attention$ci.lb, res_attention$ci.ub),  #this will be our WM
+```{r plots memory span, fig.dim = c(15, 20)}
+id_tests <- t(data.frame(inhibition = c(res_inhibition$b, res_inhibition$se,res_inhibition$ci.lb, res_inhibition$ci.ub),  #memory span
                          row.names = c('b', 'se', 'ci.lb', 'ci.ub')))
-for (id in c("inhibition", "attention"
-             )){
-  df <- stats_test[stats_test$ef_type == id, c('cite', 'yi', 'sei', 'n_magroup', 'n_id')]
+
+  df <- stats_test[, c('cite', 'yi', 'sei', 'n_magroup', 'n_id')]
   
   # Compute confidence intervals and format labels
   
@@ -347,20 +335,19 @@ for (id in c("inhibition", "attention"
     area(t = 0, l = 6, b = dim(df)[1], r = 8) 
   )
   print(p_left + p_right + plot_layout(design = layout))
-  Sys.sleep(2)
-}
+
 
 ```
 
 #### Moderator analyses
-Moderating type of ID origin for STM (both STM and WM will have separate subgroup analyses)
+Moderating type of ID origin for memory span.
 ```{r tests type of ID}
 #subgroup analysis (RE meta-analysis of each group)
 res_DS <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
-                          subset = group_id == "DS" & ef_type =="inhibition",
+                          subset = group_id == "DS",
                           tdist = TRUE, data = stats_test) # this will be our organic origin
 res_NSID <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
-                          subset = group_id == "NSID" & ef_type =="inhibition",
+                          subset = group_id == "NSID",
                           tdist = TRUE, data = stats_test) # this will be our non-specific origin
 
 
@@ -473,19 +460,6 @@ inhibition_results <- ma_pipe_sei(
 
 inhibition_et_dat <- inhibition_results$et
 
- attention <- stats_test[stats_test$ef_type == 'attention',]
- attention_model <- rma(yi, vi, data = attention)
- attention_results <- ma_pipe_sei(
-   attention,
-   true_effect = attention_model$b,
-   rep_lower = attention_model$ci.lb,
-   rep_upper = attention_model$ci.ub,
-   analysis_title = "Working memory tasks",
-   plot = TRUE
- )
- 
-attention_et_dat <- attention_results$et
-
 # Subgroup analyses for each outcome (here only presented one)
 inhibition_DS <- stats_test[stats_test$ef_type == 'inhibition' & stats_test$group_id == "DS",]
 inhibition_model_DS <- rma(yi, vi, data = inhibition_DS)
@@ -524,6 +498,16 @@ com1 <- com1 + ggtitle("Summary effect sizes and equivalence bounds") +
 com1
 
 ```
+
+# Moderator analysis
+```{r meta-regression}
+meta_reg <- rma(m1i = mean_magroup, sd1i = sd_magroup, n1i = n_magroup,
+                m2i = mean_id, sd2i = sd_id, n2i = n_id, method = "REML", measure = 'SMD1H',
+                mods = ~ iq_id, data=stats_test) #IQ predictor will be mean-centered
+summary(meta_reg)
+```
+
+
 
 ## Sensitivity analysis
 ```{r}
