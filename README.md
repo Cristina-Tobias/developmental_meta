@@ -1,10 +1,3 @@
-A systematic review of short-term and working memory abilities in
-children with intellectual disability; to what extent do the result
-support the delay or difference hypotheses?
-================
-Cris
-Last Updated: 11, February, 2025 at 16:04
-
 ## Aim
 
 The aim of the study is to investigate if short-term and working memory
@@ -67,139 +60,362 @@ guidelines for conducting and reporting systematic reviews of
 non-intervention research (REF). See table X for descriptives of the
 obtained studies.
 
-``` r
-skim_data <- skim(data[, columns_of_interest])
-skim_data
-```
+    skim_data <- skim(data[, columns_of_interest])
+    skim_data
 
-|  |  |
-|:---|:---|
-| Name | data\[, columns_of_interes… |
-| Number of rows | 99 |
-| Number of columns | 14 |
-| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ |  |
-| Column type frequency: |  |
-| numeric | 14 |
-| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ |  |
-| Group variables | None |
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">data[, columns_of_interes…</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
 
 Data summary
 
 **Variable type: numeric**
 
-| skim_variable | n_missing | complete_rate | mean | sd | p0 | p25 | p50 | p75 | p100 | hist |
-|:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|:---|
-| study_year | 0 | 1.00 | 2009.13 | 11.15 | 1962.00 | 2010.00 | 2012.00 | 2013.00 | 2020.00 | ▁▁▁▁▇ |
-| n_id | 0 | 1.00 | 22.46 | 11.19 | 10.00 | 15.00 | 19.00 | 26.00 | 68.00 | ▇▆▁▁▁ |
-| age_id | 3 | 0.97 | 16.31 | 6.24 | 4.34 | 13.59 | 14.98 | 17.73 | 49.88 | ▃▇▁▁▁ |
-| mean_ma_id | 2 | 0.98 | 6.35 | 1.26 | 1.88 | 5.75 | 6.10 | 6.74 | 11.17 | ▁▂▇▁▁ |
-| sd_ma_id | 29 | 0.71 | 2.06 | 4.82 | 0.37 | 0.67 | 0.93 | 1.56 | 24.61 | ▇▁▁▁▁ |
-| iq_id | 10 | 0.90 | 48.78 | 8.50 | 19.92 | 44.17 | 53.00 | 53.30 | 65.75 | ▁▂▂▇▁ |
-| n_magroup | 0 | 1.00 | 25.78 | 14.07 | 10.00 | 15.00 | 22.00 | 28.00 | 65.00 | ▇▅▁▁▁ |
-| age_magroup | 9 | 0.91 | 6.57 | 1.32 | 1.93 | 5.75 | 6.27 | 7.55 | 11.17 | ▁▂▇▃▁ |
-| mean_ma_magroup | 13 | 0.87 | 6.58 | 1.24 | 1.90 | 5.98 | 6.71 | 6.90 | 9.76 | ▁▂▇▇▂ |
-| iq_magroup | 50 | 0.49 | 102.73 | 8.78 | 94.00 | 95.70 | 95.70 | 109.00 | 123.56 | ▇▁▅▁▁ |
-| mean_id | 0 | 1.00 | 53.96 | 164.97 | 0.04 | 3.84 | 9.93 | 22.74 | 1096.20 | ▇▁▁▁▁ |
-| mean_magroup | 0 | 1.00 | 52.19 | 165.84 | 0.03 | 3.78 | 9.67 | 22.81 | 1258.00 | ▇▁▁▁▁ |
-| sd_id | 0 | 1.00 | 15.64 | 36.80 | 0.19 | 2.38 | 5.01 | 10.50 | 251.50 | ▇▁▁▁▁ |
-| sd_magroup | 0 | 1.00 | 12.10 | 32.96 | 0.13 | 1.90 | 3.50 | 5.52 | 277.90 | ▇▁▁▁▁ |
+<table style="width:100%;">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 13%" />
+<col style="width: 7%" />
+<col style="width: 6%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">study_year</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2009.13</td>
+<td style="text-align: right;">11.15</td>
+<td style="text-align: right;">1962.00</td>
+<td style="text-align: right;">2010.00</td>
+<td style="text-align: right;">2012.00</td>
+<td style="text-align: right;">2013.00</td>
+<td style="text-align: right;">2020.00</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">n_id</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">22.46</td>
+<td style="text-align: right;">11.19</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">15.00</td>
+<td style="text-align: right;">19.00</td>
+<td style="text-align: right;">26.00</td>
+<td style="text-align: right;">68.00</td>
+<td style="text-align: left;">▇▆▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">age_id</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: right;">16.31</td>
+<td style="text-align: right;">6.24</td>
+<td style="text-align: right;">4.34</td>
+<td style="text-align: right;">13.59</td>
+<td style="text-align: right;">14.98</td>
+<td style="text-align: right;">17.73</td>
+<td style="text-align: right;">49.88</td>
+<td style="text-align: left;">▃▇▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mean_ma_id</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">6.35</td>
+<td style="text-align: right;">1.26</td>
+<td style="text-align: right;">1.88</td>
+<td style="text-align: right;">5.75</td>
+<td style="text-align: right;">6.10</td>
+<td style="text-align: right;">6.74</td>
+<td style="text-align: right;">11.17</td>
+<td style="text-align: left;">▁▂▇▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sd_ma_id</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">2.06</td>
+<td style="text-align: right;">4.82</td>
+<td style="text-align: right;">0.37</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">1.56</td>
+<td style="text-align: right;">24.61</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">iq_id</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">48.78</td>
+<td style="text-align: right;">8.50</td>
+<td style="text-align: right;">19.92</td>
+<td style="text-align: right;">44.17</td>
+<td style="text-align: right;">53.00</td>
+<td style="text-align: right;">53.30</td>
+<td style="text-align: right;">65.75</td>
+<td style="text-align: left;">▁▂▂▇▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">n_magroup</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">25.78</td>
+<td style="text-align: right;">14.07</td>
+<td style="text-align: right;">10.00</td>
+<td style="text-align: right;">15.00</td>
+<td style="text-align: right;">22.00</td>
+<td style="text-align: right;">28.00</td>
+<td style="text-align: right;">65.00</td>
+<td style="text-align: left;">▇▅▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">age_magroup</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">6.57</td>
+<td style="text-align: right;">1.32</td>
+<td style="text-align: right;">1.93</td>
+<td style="text-align: right;">5.75</td>
+<td style="text-align: right;">6.27</td>
+<td style="text-align: right;">7.55</td>
+<td style="text-align: right;">11.17</td>
+<td style="text-align: left;">▁▂▇▃▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mean_ma_magroup</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">6.58</td>
+<td style="text-align: right;">1.24</td>
+<td style="text-align: right;">1.90</td>
+<td style="text-align: right;">5.98</td>
+<td style="text-align: right;">6.71</td>
+<td style="text-align: right;">6.90</td>
+<td style="text-align: right;">9.76</td>
+<td style="text-align: left;">▁▂▇▇▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">iq_magroup</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">102.73</td>
+<td style="text-align: right;">8.78</td>
+<td style="text-align: right;">94.00</td>
+<td style="text-align: right;">95.70</td>
+<td style="text-align: right;">95.70</td>
+<td style="text-align: right;">109.00</td>
+<td style="text-align: right;">123.56</td>
+<td style="text-align: left;">▇▁▅▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mean_id</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">53.96</td>
+<td style="text-align: right;">164.97</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">3.84</td>
+<td style="text-align: right;">9.93</td>
+<td style="text-align: right;">22.74</td>
+<td style="text-align: right;">1096.20</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mean_magroup</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">52.19</td>
+<td style="text-align: right;">165.84</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">3.78</td>
+<td style="text-align: right;">9.67</td>
+<td style="text-align: right;">22.81</td>
+<td style="text-align: right;">1258.00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sd_id</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">15.64</td>
+<td style="text-align: right;">36.80</td>
+<td style="text-align: right;">0.19</td>
+<td style="text-align: right;">2.38</td>
+<td style="text-align: right;">5.01</td>
+<td style="text-align: right;">10.50</td>
+<td style="text-align: right;">251.50</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sd_magroup</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">12.10</td>
+<td style="text-align: right;">32.96</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">1.90</td>
+<td style="text-align: right;">3.50</td>
+<td style="text-align: right;">5.52</td>
+<td style="text-align: right;">277.90</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
 
-``` r
-missing_summary <- miss_var_summary(data[, columns_of_interest])
-iq_missing <- missing_summary[missing_summary$variable == "iq_id", "pct_miss"][[1]]
-iq_ma_missing <- missing_summary[missing_summary$variable == "iq_magroup", "pct_miss"][[1]]
-```
+    missing_summary <- miss_var_summary(data[, columns_of_interest])
+    iq_missing <- missing_summary[missing_summary$variable == "iq_id", "pct_miss"][[1]]
+    iq_ma_missing <- missing_summary[missing_summary$variable == "iq_magroup", "pct_miss"][[1]]
 
 <!---
 For both groups, we extracted the IQ scores, number of participants, mean and SD of the performance in the tasks, and the mean and SD of the chronological and mental age. The variable with the most missing data was  with % data missing. IQ scores for the ID group were missing %, and for the MA group, % of IQ scores were missing.
 -->
 
-``` r
-missing_data <- vis_miss(data[,columns_of_interest])
-missing_data
-```
+    missing_data <- vis_miss(data[,columns_of_interest])
+    missing_data
 
-![](README_files/figure-gfm/descriptives-1.png)<!-- -->
+![](README_files/figure-markdown_strict/descriptives-1.png)
+
+    power_median <- pwr::pwr.t2n.test(n1 = 71, n2 = 62, power = 0.80, sig.level = 0.05, alternative = c("greater")) #taken from the largest study (Palmqvist, 2020) in the Spaniol & Danielsson MA
+
+    power_median$d
+
+    ## [1] 0.4344462
+
+    pam_g <- escalc("SMD1", m1i = 5.9, m2i = 7, sd1i = 2.3, sd2i = 1.8, n1i = 71, n2i = 62) #taken from the Palmqvist (2020) working memory task scores
 
 ### Statistical analysis
 
 We are performing a multilevel meta-analysis of memory span.
 
-``` r
-res_inhibition <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id), 
-                          tdist = TRUE, data = stats_test) 
+    res_inhibition <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id), 
+                              tdist = TRUE, data = stats_test) 
 
-dat.comp <- data.frame(estimate = c(coef(res_inhibition)), 
-                       stderror = c(res_inhibition$se),
-                       tau2     = c(res_inhibition$tau2))
-dfround(dat.comp, 3)
-```
+    dat.comp <- data.frame(estimate = c(coef(res_inhibition)), 
+                           stderror = c(res_inhibition$se),
+                           tau2     = c(res_inhibition$tau2))
+    dfround(dat.comp, 3)
 
     ##         estimate stderror tau2
     ## intrcpt   -0.092    0.088    0
 
-``` r
-# Compute confidence intervals and format labels
+    # Compute confidence intervals and format labels
 
-df <- stats_test[, c('cite', 'yi', 'sei', 'n_magroup', 'n_id')]
-  
-df$cite <- paste0(df$cite, '.', ave(df$cite, df$cite, FUN = seq_along))
-  df <- df %>%
-    mutate(
-      lower = yi - 1.96 * sei,  
-      upper = yi + 1.96 * sei,  
-      ci_text = paste0(round(yi,2), "  [", round(lower, 2), ", ", round(upper, 2), "]")
-    )
-FE_model <- paste0('RE Model for the memory span outcome')
-  df <- df %>%
-    arrange(yi)
-  df_2 <- data.frame(cite = FE_model, 
-                     yi = res_inhibition['b'], 
-                     sei = res_inhibition['se'], 
-                     n_magroup = NA_integer_,
-                     n_id = NA_integer_, 
-                     lower= res_inhibition['ci.lb'], 
-                     upper = res_inhibition['ci.ub'], 
-                     ci_text = paste0(round(as.numeric(res_inhibition['b']),2), 
-                           "  [", round(as.numeric(res_inhibition['ci.lb']), 2), ", ", 
-                           round(as.numeric(res_inhibition['ci.ub']), 2), "]"))
-  df <- bind_rows(df, df_2)
-  df[, c('yi','sei', 'lower', 'upper')] <- lapply(df[, c('yi','sei', 'lower', 'upper')], as.numeric)
-  df$desired_order <- seq(dim(df)[1],1)
-  p_right <- ggplot(df, aes(y = reorder(cite, desired_order))) +
-    geom_point(aes(x=yi), size = 3, shape=15, color = "darkred") +  
-    geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.2, color = "grey") +  
-    labs(
-      x = "Effect Size (Hedges' g)",
-      y = "Study",
-      caption = "Error bars represent 95% confidence intervals"
-    )   + theme(axis.line.y = element_blank(),
-                axis.ticks.y= element_blank(),
-                axis.text.y= element_blank(),
-                axis.title.y= element_blank(),
-                panel.background = element_rect(fill = "white"
-                )) + coord_cartesian(xlim = c(min(df$lower), max(df$upper)), ylim = c(0,dim(df)[1] + 1))
-  p_left <- ggplot(df, aes(y = reorder(cite, desired_order))) + labs(x = '') +
-    geom_text(aes(x = 0, label = cite), hjust = 0, fontface = "bold") +
-    annotate(geom="text", x=0.3, y=dim(df)[1] + 1, label="Study", fontface = "bold") +
-    geom_text(aes(x = 0.8, label = n_id), hjust = 0) +
-    annotate(geom="text", x=0.8, y=dim(df)[1] + 1, label="N (ID)", fontface = "bold") +
-    geom_text(aes(x = 1, label = n_magroup), hjust = 0) +
-    annotate(geom="text", x=1, y=dim(df)[1] + 1, label="N (Control)", fontface = "bold") +
-    geom_text(
-      aes(x = 1.3, label = ci_text),
-      hjust = 0
-    ) +
-    annotate(geom="text", x=1.4, y=dim(df)[1] + 1, label="Hedges' g [95% CI]", fontface = "bold") +
-    theme_void() +
-    coord_cartesian(xlim = c(0, 2), ylim = c(0,dim(df)[1] + 1))
-  
-  layout <- c(
-    area(t = 0, l = 0, b = dim(df)[1], r = 5), 
-    area(t = 0, l = 6, b = dim(df)[1], r = 8) 
-  )
-  print(p_left + p_right + plot_layout(design = layout))
-```
+    df <- stats_test[, c('cite', 'yi', 'sei', 'n_magroup', 'n_id')]
+      
+    df$cite <- paste0(df$cite, '.', ave(df$cite, df$cite, FUN = seq_along))
+      df <- df %>%
+        mutate(
+          lower = yi - 1.96 * sei,  
+          upper = yi + 1.96 * sei,  
+          ci_text = paste0(round(yi,2), "  [", round(lower, 2), ", ", round(upper, 2), "]")
+        )
+    FE_model <- paste0('RE Model for the memory span outcome')
+      df <- df %>%
+        arrange(yi)
+      df_2 <- data.frame(cite = FE_model, 
+                         yi = res_inhibition['b'], 
+                         sei = res_inhibition['se'], 
+                         n_magroup = NA_integer_,
+                         n_id = NA_integer_, 
+                         lower= res_inhibition['ci.lb'], 
+                         upper = res_inhibition['ci.ub'], 
+                         ci_text = paste0(round(as.numeric(res_inhibition['b']),2), 
+                               "  [", round(as.numeric(res_inhibition['ci.lb']), 2), ", ", 
+                               round(as.numeric(res_inhibition['ci.ub']), 2), "]"))
+      df <- bind_rows(df, df_2)
+      df[, c('yi','sei', 'lower', 'upper')] <- lapply(df[, c('yi','sei', 'lower', 'upper')], as.numeric)
+      df$desired_order <- seq(dim(df)[1],1)
+      p_right <- ggplot(df, aes(y = reorder(cite, desired_order))) +
+        geom_point(aes(x=yi), size = 3, shape=15, color = "darkred") +  
+        geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.2, color = "grey") +  
+        labs(
+          x = "Effect Size (Hedges' g)",
+          y = "Study",
+          caption = "Error bars represent 95% confidence intervals"
+        )   + theme(axis.line.y = element_blank(),
+                    axis.ticks.y= element_blank(),
+                    axis.text.y= element_blank(),
+                    axis.title.y= element_blank(),
+                    panel.background = element_rect(fill = "white"
+                    )) + coord_cartesian(xlim = c(min(df$lower), max(df$upper)), ylim = c(0,dim(df)[1] + 1))
+      p_left <- ggplot(df, aes(y = reorder(cite, desired_order))) + labs(x = '') +
+        geom_text(aes(x = 0, label = cite), hjust = 0, fontface = "bold") +
+        annotate(geom="text", x=0.3, y=dim(df)[1] + 1, label="Study", fontface = "bold") +
+        geom_text(aes(x = 0.8, label = n_id), hjust = 0) +
+        annotate(geom="text", x=0.8, y=dim(df)[1] + 1, label="N (ID)", fontface = "bold") +
+        geom_text(aes(x = 1, label = n_magroup), hjust = 0) +
+        annotate(geom="text", x=1, y=dim(df)[1] + 1, label="N (Control)", fontface = "bold") +
+        geom_text(
+          aes(x = 1.3, label = ci_text),
+          hjust = 0
+        ) +
+        annotate(geom="text", x=1.4, y=dim(df)[1] + 1, label="Hedges' g [95% CI]", fontface = "bold") +
+        theme_void() +
+        coord_cartesian(xlim = c(0, 2), ylim = c(0,dim(df)[1] + 1))
+      
+      layout <- c(
+        area(t = 0, l = 0, b = dim(df)[1], r = 5), 
+        area(t = 0, l = 6, b = dim(df)[1], r = 8) 
+      )
+      print(p_left + p_right + plot_layout(design = layout))
 
     ## Warning: Removed 1 row containing missing values or values outside the scale range
     ## (`geom_text()`).
@@ -212,43 +428,39 @@ FE_model <- paste0('RE Model for the memory span outcome')
     ## Warning: Removed 1 row containing missing values or values outside the scale range
     ## (`geom_errorbarh()`).
 
-![](README_files/figure-gfm/plots%20memory%20span-1.png)<!-- -->
+![](README_files/figure-markdown_strict/plots%20memory%20span-1.png)
 
 #### Moderator analyses
 
 Moderating type of ID origin for memory span.
 
-``` r
-#subgroup analysis (RE meta-analysis of each group)
-res_DS <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
-                          subset = group_id == "DS",
-                          tdist = TRUE, data = stats_test) # this will be our organic origin
-res_NSID <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
-                          subset = group_id == "NSID",
-                          tdist = TRUE, data = stats_test) # this will be our non-specific origin
+    #subgroup analysis (RE meta-analysis of each group)
+    res_DS <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                              subset = group_id == "DS",
+                              tdist = TRUE, data = stats_test) # this will be our organic origin
+    res_NSID <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                              subset = group_id == "NSID",
+                              tdist = TRUE, data = stats_test) # this will be our non-specific origin
 
 
-dat.comp <- data.frame(alloc    = c("DS", "NSID"
-                                    ), 
-                       estimate = c(coef(res_DS), coef(res_NSID)
-                                    ), 
-                       stderror = c(res_DS$se, res_NSID$se
-                                    ),
-                       tau2     = c(res_DS$tau2, res_NSID$tau2
-                                   )
-                       )
-dfround(dat.comp, 3)
-```
+    dat.comp <- data.frame(alloc    = c("DS", "NSID"
+                                        ), 
+                           estimate = c(coef(res_DS), coef(res_NSID)
+                                        ), 
+                           stderror = c(res_DS$se, res_NSID$se
+                                        ),
+                           tau2     = c(res_DS$tau2, res_NSID$tau2
+                                       )
+                           )
+    dfround(dat.comp, 3)
 
     ##   alloc estimate stderror tau2
     ## 1    DS   -0.175    0.119    0
     ## 2  NSID   -0.116    0.138    0
 
-``` r
-#fixed effects meta-analysis of the subgroup estimates
-# taken from: https://www.metafor-project.org/doku.php/tips:comp_two_independent_estimates#separate_meta-analyses
-rma(estimate, sei=stderror, mods = ~ alloc, method="FE", data=dat.comp, digits=3)
-```
+    #fixed effects meta-analysis of the subgroup estimates
+    # taken from: https://www.metafor-project.org/doku.php/tips:comp_two_independent_estimates#separate_meta-analyses
+    rma(estimate, sei=stderror, mods = ~ alloc, method="FE", data=dat.comp, digits=3)
 
     ## 
     ## Fixed-Effects with Moderators Model (k = 2)
@@ -272,72 +484,70 @@ rma(estimate, sei=stderror, mods = ~ alloc, method="FE", data=dat.comp, digits=3
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-``` r
-id_tests <- t(data.frame(DS = c(res_DS$b, res_DS$se,res_DS$ci.lb, res_DS$ci.ub),
-                         NSID = c(res_NSID$b, res_NSID$se,res_NSID$ci.lb, res_NSID$ci.ub),
-                         row.names = c('b', 'se', 'ci.lb', 'ci.ub')))
-for (id in c('DS', 'NSID'
-            )
-     ){
-  df <- stats_test[stats_test$group_id == id, c('cite', 'yi', 'sei', 'n_magroup', 'n_id')]
-  
-  # Compute confidence intervals and format labels
-  
-  df$cite <- paste0(df$cite, '.', ave(df$cite, df$cite, FUN = seq_along))
-  df <- df %>%
-    mutate(
-      lower = yi - 1.96 * sei,  
-      upper = yi + 1.96 * sei,  
-      ci_text = paste0(round(yi,2), "  [", round(lower, 2), ", ", round(upper, 2), "]")
-    )
-  FE_model <- paste0('RE Model for ', id, ' group')
-  df <- df %>%
-    arrange(yi)
-  df <- rbind(df, c(FE_model, id_tests[id,'b'], id_tests[id,'se'], '','', 
-                    id_tests[id,'ci.lb'], id_tests[id,'ci.ub'], 
-                    paste0(round(id_tests[id,'b'],2), 
-                           "  [", round(id_tests[id,'ci.lb'], 2), ", ", 
-                           round(id_tests[id,'ci.ub'], 2), "]")))
-  df[, c('yi','sei', 'lower', 'upper')] <- lapply(df[, c('yi','sei', 'lower', 'upper')], as.numeric)
-  df$desired_order <- seq(dim(df)[1],1)
-  p_right <- ggplot(df, aes(y = reorder(cite, desired_order))) +
-    geom_point(aes(x=yi), size = 3, shape=15, color = "darkred") +  
-    geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.2, color = "grey") +  
-    labs(
-      x = "Effect Size (Hedges' g)",
-      y = "Study",
-      caption = "Error bars represent 95% confidence intervals"
-    )   + theme(axis.line.y = element_blank(),
-                axis.ticks.y= element_blank(),
-                axis.text.y= element_blank(),
-                axis.title.y= element_blank(),
-                panel.background = element_rect(fill = "white"
-                )) + coord_cartesian(xlim = c(min(df$lower), max(df$upper)), ylim = c(0,dim(df)[1] + 1))
-  p_left <- ggplot(df, aes(y = reorder(cite, desired_order))) + labs(x = '') +
-    geom_text(aes(x = 0, label = cite), hjust = 0, fontface = "bold") +
-    annotate(geom="text", x=0.3, y=dim(df)[1] + 1, label="Study", fontface = "bold") +
-    geom_text(aes(x = 0.8, label = n_id), hjust = 0) +
-    annotate(geom="text", x=0.8, y=dim(df)[1] + 1, label="N (ID)", fontface = "bold") +
-    geom_text(aes(x = 1, label = n_magroup), hjust = 0) +
-    annotate(geom="text", x=1, y=dim(df)[1] + 1, label="N (Control)", fontface = "bold") +
-    geom_text(
-      aes(x = 1.3, label = ci_text),
-      hjust = 0
-    ) +
-    annotate(geom="text", x=1.4, y=dim(df)[1] + 1, label="Hedges' g [95% CI]", fontface = "bold") +
-    theme_void() +
-    coord_cartesian(xlim = c(0, 2), ylim = c(0,dim(df)[1] + 1))
-  
-  layout <- c(
-    area(t = 0, l = 0, b = dim(df)[1], r = 5), 
-    area(t = 0, l = 6, b = dim(df)[1], r = 8) 
-  )
-  print(p_left + p_right + plot_layout(design = layout))
-  Sys.sleep(2)
-}
-```
+    id_tests <- t(data.frame(DS = c(res_DS$b, res_DS$se,res_DS$ci.lb, res_DS$ci.ub),
+                             NSID = c(res_NSID$b, res_NSID$se,res_NSID$ci.lb, res_NSID$ci.ub),
+                             row.names = c('b', 'se', 'ci.lb', 'ci.ub')))
+    for (id in c('DS', 'NSID'
+                )
+         ){
+      df <- stats_test[stats_test$group_id == id, c('cite', 'yi', 'sei', 'n_magroup', 'n_id')]
+      
+      # Compute confidence intervals and format labels
+      
+      df$cite <- paste0(df$cite, '.', ave(df$cite, df$cite, FUN = seq_along))
+      df <- df %>%
+        mutate(
+          lower = yi - 1.96 * sei,  
+          upper = yi + 1.96 * sei,  
+          ci_text = paste0(round(yi,2), "  [", round(lower, 2), ", ", round(upper, 2), "]")
+        )
+      FE_model <- paste0('RE Model for ', id, ' group')
+      df <- df %>%
+        arrange(yi)
+      df <- rbind(df, c(FE_model, id_tests[id,'b'], id_tests[id,'se'], '','', 
+                        id_tests[id,'ci.lb'], id_tests[id,'ci.ub'], 
+                        paste0(round(id_tests[id,'b'],2), 
+                               "  [", round(id_tests[id,'ci.lb'], 2), ", ", 
+                               round(id_tests[id,'ci.ub'], 2), "]")))
+      df[, c('yi','sei', 'lower', 'upper')] <- lapply(df[, c('yi','sei', 'lower', 'upper')], as.numeric)
+      df$desired_order <- seq(dim(df)[1],1)
+      p_right <- ggplot(df, aes(y = reorder(cite, desired_order))) +
+        geom_point(aes(x=yi), size = 3, shape=15, color = "darkred") +  
+        geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.2, color = "grey") +  
+        labs(
+          x = "Effect Size (Hedges' g)",
+          y = "Study",
+          caption = "Error bars represent 95% confidence intervals"
+        )   + theme(axis.line.y = element_blank(),
+                    axis.ticks.y= element_blank(),
+                    axis.text.y= element_blank(),
+                    axis.title.y= element_blank(),
+                    panel.background = element_rect(fill = "white"
+                    )) + coord_cartesian(xlim = c(min(df$lower), max(df$upper)), ylim = c(0,dim(df)[1] + 1))
+      p_left <- ggplot(df, aes(y = reorder(cite, desired_order))) + labs(x = '') +
+        geom_text(aes(x = 0, label = cite), hjust = 0, fontface = "bold") +
+        annotate(geom="text", x=0.3, y=dim(df)[1] + 1, label="Study", fontface = "bold") +
+        geom_text(aes(x = 0.8, label = n_id), hjust = 0) +
+        annotate(geom="text", x=0.8, y=dim(df)[1] + 1, label="N (ID)", fontface = "bold") +
+        geom_text(aes(x = 1, label = n_magroup), hjust = 0) +
+        annotate(geom="text", x=1, y=dim(df)[1] + 1, label="N (Control)", fontface = "bold") +
+        geom_text(
+          aes(x = 1.3, label = ci_text),
+          hjust = 0
+        ) +
+        annotate(geom="text", x=1.4, y=dim(df)[1] + 1, label="Hedges' g [95% CI]", fontface = "bold") +
+        theme_void() +
+        coord_cartesian(xlim = c(0, 2), ylim = c(0,dim(df)[1] + 1))
+      
+      layout <- c(
+        area(t = 0, l = 0, b = dim(df)[1], r = 5), 
+        area(t = 0, l = 6, b = dim(df)[1], r = 8) 
+      )
+      print(p_left + p_right + plot_layout(design = layout))
+      Sys.sleep(2)
+    }
 
-![](README_files/figure-gfm/plots%20type%20of%20ID,%20-1.png)<!-- -->![](README_files/figure-gfm/plots%20type%20of%20ID,%20-2.png)<!-- -->
+![](README_files/figure-markdown_strict/plots%20type%20of%20ID,%20-1.png)![](README_files/figure-markdown_strict/plots%20type%20of%20ID,%20-2.png)
 
 ### Equivalence testing
 
@@ -345,9 +555,7 @@ The studies looked at different types of executive functions (CHANGE
 THIS LATER TO SUIT OUR OWN ANALYSIS). In the next table you can see the
 extracted descriptives separated by executive function.
 
-``` r
-describeBy(data[,columns_of_interest], data$ef_type)
-```
+    describeBy(data[,columns_of_interest], data$ef_type)
 
     ## 
     ##  Descriptive statistics by group 
@@ -545,21 +753,19 @@ describeBy(data[,columns_of_interest], data$ef_type)
 
 Equivalence testing for the different types of tasks.
 
-``` r
-# Overall meta-analyses of STM and WM
-inhibition <- stats_test[stats_test$ef_type == 'inhibition',]
-inhibition_model <- rma(yi, vi, data = inhibition)
-inhibition_results <- ma_pipe_sei(
-  inhibition,
-  true_effect = inhibition_model$b,
-  rep_lower = inhibition_model$ci.lb,
-  rep_upper = inhibition_model$ci.ub,
-  analysis_title = "Short-term memory tasks",
-  plot = TRUE
-)
-```
+    # Overall meta-analyses of STM and WM
+    inhibition <- stats_test[stats_test$ef_type == 'inhibition',]
+    inhibition_model <- rma(yi, vi, data = inhibition)
+    inhibition_results <- ma_pipe_sei(
+      inhibition,
+      true_effect = inhibition_model$b,
+      rep_lower = inhibition_model$ci.lb,
+      rep_upper = inhibition_model$ci.ub,
+      analysis_title = "Short-term memory tasks",
+      plot = TRUE
+    )
 
-![](README_files/figure-gfm/equivalence%20test%20plots-1.png)<!-- -->
+![](README_files/figure-markdown_strict/equivalence%20test%20plots-1.png)
 
     ## 
 
@@ -574,23 +780,21 @@ inhibition_results <- ma_pipe_sei(
     ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
     ## generated.
 
-``` r
-inhibition_et_dat <- inhibition_results$et
+    inhibition_et_dat <- inhibition_results$et
 
-# Subgroup analyses for each outcome (here only presented one)
-inhibition_DS <- stats_test[stats_test$ef_type == 'inhibition' & stats_test$group_id == "DS",]
-inhibition_model_DS <- rma(yi, vi, data = inhibition_DS)
-inhibition_results_DS <- ma_pipe_sei(
-  inhibition_DS,
-  true_effect = inhibition_model_DS$b,
-  rep_lower = inhibition_model_DS$ci.lb,
-  rep_upper = inhibition_model_DS$ci.ub,
-  analysis_title = "STM tasks for organic origin",
-  plot = TRUE
-)
-```
+    # Subgroup analyses for each outcome (here only presented one)
+    inhibition_DS <- stats_test[stats_test$ef_type == 'inhibition' & stats_test$group_id == "DS",]
+    inhibition_model_DS <- rma(yi, vi, data = inhibition_DS)
+    inhibition_results_DS <- ma_pipe_sei(
+      inhibition_DS,
+      true_effect = inhibition_model_DS$b,
+      rep_lower = inhibition_model_DS$ci.lb,
+      rep_upper = inhibition_model_DS$ci.ub,
+      analysis_title = "STM tasks for organic origin",
+      plot = TRUE
+    )
 
-![](README_files/figure-gfm/equivalence%20test%20plots-2.png)<!-- -->
+![](README_files/figure-markdown_strict/equivalence%20test%20plots-2.png)
 
     ## 
 
@@ -599,22 +803,20 @@ inhibition_results_DS <- ma_pipe_sei(
     ## NHST: don't reject null significance hypothesis that the effect is equal to 0 
     ## TOST: don't reject null equivalence hypothesis
 
-``` r
-inhibition_et_dat_DS <- inhibition_results_DS$et
+    inhibition_et_dat_DS <- inhibition_results_DS$et
 
-inhibition_NSID <- stats_test[stats_test$ef_type == 'inhibition' & stats_test$group_id == "NSID",]
-inhibition_model_NSID <- rma(yi, vi, data = inhibition_NSID)
-inhibition_results_NSID <- ma_pipe_sei(
-  inhibition_NSID,
-  true_effect = inhibition_model_NSID$b,
-  rep_lower = inhibition_model_NSID$ci.lb,
-  rep_upper = inhibition_model_NSID$ci.ub,
-  analysis_title = "STM tasks for familial origin",
-  plot = TRUE
-)
-```
+    inhibition_NSID <- stats_test[stats_test$ef_type == 'inhibition' & stats_test$group_id == "NSID",]
+    inhibition_model_NSID <- rma(yi, vi, data = inhibition_NSID)
+    inhibition_results_NSID <- ma_pipe_sei(
+      inhibition_NSID,
+      true_effect = inhibition_model_NSID$b,
+      rep_lower = inhibition_model_NSID$ci.lb,
+      rep_upper = inhibition_model_NSID$ci.ub,
+      analysis_title = "STM tasks for familial origin",
+      plot = TRUE
+    )
 
-![](README_files/figure-gfm/equivalence%20test%20plots-3.png)<!-- -->
+![](README_files/figure-markdown_strict/equivalence%20test%20plots-3.png)
 
     ## 
 
@@ -623,36 +825,30 @@ inhibition_results_NSID <- ma_pipe_sei(
     ## NHST: don't reject null significance hypothesis that the effect is equal to 0 
     ## TOST: don't reject null equivalence hypothesis
 
-``` r
-inhibition_et_dat_NSID <- inhibition_results_NSID$et
+    inhibition_et_dat_NSID <- inhibition_results_NSID$et
 
-## equivalence forest plot
-com1 <- rbind(inhibition_et_dat,
-              inhibition_et_dat_DS, inhibition_et_dat_NSID)
+    ## equivalence forest plot
+    com1 <- rbind(inhibition_et_dat,
+                  inhibition_et_dat_DS, inhibition_et_dat_NSID)
 
-com1 <- combine_et(com1)
+    com1 <- combine_et(com1)
 
-com1 <- com1 + ggtitle("Summary effect sizes and equivalence bounds") +
-  theme(plot.title = element_text(hjust = 0.5))
+    com1 <- com1 + ggtitle("Summary effect sizes and equivalence bounds") +
+      theme(plot.title = element_text(hjust = 0.5))
 
-com1
-```
+    com1
 
-![](README_files/figure-gfm/equivalence%20test%20plots-4.png)<!-- -->
+![](README_files/figure-markdown_strict/equivalence%20test%20plots-4.png)
 
 # Moderator analysis
 
-``` r
-meta_reg <- rma(m1i = mean_magroup, sd1i = sd_magroup, n1i = n_magroup,
-                m2i = mean_id, sd2i = sd_id, n2i = n_id, method = "REML", measure = 'SMD1H',
-                mods = ~ iq_id, data=stats_test) #IQ predictor will be mean-centered
-```
+    meta_reg <- rma(m1i = mean_magroup, sd1i = sd_magroup, n1i = n_magroup,
+                    m2i = mean_id, sd2i = sd_id, n2i = n_id, method = "REML", measure = 'SMD1H',
+                    mods = ~ iq_id, data=stats_test) #IQ predictor will be mean-centered
 
     ## Warning: 10 studies with NAs omitted from model fitting.
 
-``` r
-summary(meta_reg)
-```
+    summary(meta_reg)
 
     ## 
     ## Mixed-Effects Model (k = 89; tau^2 estimator: REML)
@@ -683,80 +879,157 @@ summary(meta_reg)
 
 ## Sensitivity analysis
 
-``` r
-sens_inh <- cooks.distance.rma.mv(res_inhibition)
+    # Cook's distance
+    sens_inh <- cooks.distance.rma.mv(res_inhibition)
+    plot(sens_inh, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
 
+![](README_files/figure-markdown_strict/sensitivity-analysis-1.png)
 
-plot(sens_inh, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
-```
+    ## "leave-one-out" analysis with dfbetas value for dependent effect size multilevel analyses
+    loneo <- dfbetas(res_inhibition) %>% as.matrix()
+    plot(loneo, type="o", pch=19, xlab="Observed Outcome", ylab="DFBETAS Value")
 
-![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](README_files/figure-markdown_strict/sensitivity-analysis-2.png)
 
-``` r
-sessionInfo()
-```
+    ## sensitivity analysis for the inclusion criteria
+    #subgroup analysis (RE meta-analysis of each group)
+    stats_test <- stats_test %>% mutate(group_inclusion_criteria = sample(c("group_a","group_b","group_c","group_d"), n(), replace = TRUE))
 
-    ## R version 4.4.2 (2024-10-31)
-    ## Platform: aarch64-apple-darwin20
-    ## Running under: macOS Sequoia 15.3
+    res_a <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                              subset = group_inclusion_criteria == "group_a",
+                              tdist = TRUE, data = stats_test) # studies reported every participant’s IQ score
+    res_b <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                              subset = group_inclusion_criteria == "group_b",
+                              tdist = TRUE, data = stats_test) # studies report the participants have been diagnosed with ID
+    res_c <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                              subset = group_inclusion_criteria == "group_c",
+                              tdist = TRUE, data = stats_test) # studies only reports the mean IQ score lower than 60
+    res_d <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                              subset = group_inclusion_criteria == "group_d",
+                              tdist = TRUE, data = stats_test) # studies report ID diagnosis and eligible IQ scores
+
+    dat.comp.incl <- data.frame(alloc    = c("group_a", "group_b", "group_c", "group_d"
+                                        ), 
+                           estimate = c(coef(res_a), coef(res_b), coef(res_c), coef(res_d)
+                                        ), 
+                           stderror = c(res_a$se, res_b$se, res_c$se, res_d$se
+                                        ),
+                           tau2     = c(res_a$tau2, res_b$tau2, res_c$tau2, res_d$tau2 
+                                       )
+                           )
+    dfround(dat.comp.incl, 3)
+
+    ##     alloc estimate stderror tau2
+    ## 1 group_a   -0.073    0.215    0
+    ## 2 group_b   -0.087    0.118    0
+    ## 3 group_c   -0.217    0.262    0
+    ## 4 group_d   -0.059    0.157    0
+
+    # contour enhanced funnel plot, funnel centered at 0
+    funnel_data <- funnel(res_inhibition, level=c(90, 95, 99), refline=0, legend=TRUE)
+
+![](README_files/figure-markdown_strict/publication-bias-1.png)
+
+    # p-curve, R-Index are calculated in the Shiny App, .csv file with necessary data is on OSF. Link to the p-checker: https://shiny.psy.lmu.de/felix/p-checker/
+
+    # z-curve
+    zdata <- data.frame(z = stats_test$yi / sqrt(stats_test$vi),
+                        p = 2 * pnorm(-abs(stats_test$yi / sqrt(stats_test$vi))))
+    fit <- zcurve(as.numeric(zdata[,"z"]))
+    summary(fit)
+
+    ## Call:
+    ## zcurve(z = as.numeric(zdata[, "z"]))
+    ## 
+    ## model: EM via EM
+    ## 
+    ##     Estimate  l.CI  u.CI
+    ## ERR    0.494 0.270 0.707
+    ## EDR    0.106 0.050 0.520
+    ## 
+    ## Model converged in 92 + 358 iterations
+    ## Fitted using 41 z-values. 99 supplied, 41 significant (ODR = 0.41, 95% CI [0.32, 0.52]).
+    ## Q = -38.48, 95% CI[-51.54, -22.80]
+
+    plot(fit)
+
+![](README_files/figure-markdown_strict/publication-bias-2.png)
+
+    #pet-peese: code modified from https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/pub-bias.html#small-study-effects
+    dat.petpeese <- data.frame(TE = stats_test$yi,
+                               seTE_c = sqrt((stats_test$n_id+stats_test$n_magroup)/(stats_test$n_id*stats_test$n_magroup)),
+                               seTE_c2 = (stats_test$n_id+stats_test$n_magroup)/(stats_test$n_id*stats_test$n_magroup))
+
+    pet <- rma.mv(TE, seTE_c2, mods = ~seTE_c, data = dat.petpeese, method = "FE")
+    peese <- rma.mv(TE, seTE_c2, mods = ~seTE_c2, data = dat.petpeese, method = "FE")
+
+    sessionInfo()
+
+    ## R version 4.4.3 (2025-02-28)
+    ## Platform: x86_64-pc-linux-gnu
+    ## Running under: Ubuntu 25.04
     ## 
     ## Matrix products: default
-    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
-    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+    ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+    ## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.29.so;  LAPACK version 3.12.0
     ## 
     ## locale:
-    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+    ##  [3] LC_TIME=sv_SE.UTF-8        LC_COLLATE=en_US.UTF-8    
+    ##  [5] LC_MONETARY=sv_SE.UTF-8    LC_MESSAGES=en_US.UTF-8   
+    ##  [7] LC_PAPER=sv_SE.UTF-8       LC_NAME=C                 
+    ##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+    ## [11] LC_MEASUREMENT=sv_SE.UTF-8 LC_IDENTIFICATION=C       
     ## 
     ## time zone: Europe/Stockholm
-    ## tzcode source: internal
+    ## tzcode source: system (glibc)
     ## 
     ## attached base packages:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] psych_2.4.12        skimr_2.1.5         naniar_1.1.0       
-    ##  [4] dmetar_0.1.0        ggrepel_0.9.6       devtools_2.4.5     
-    ##  [7] usethis_3.1.0       tidyr_1.3.1         dplyr_1.1.4        
-    ## [10] TOSTER_0.8.4        patchwork_1.3.0     ggthemes_5.1.0     
-    ## [13] ggplot2_3.5.1       readr_2.1.5         metaviz_0.3.1      
-    ## [16] reshape_0.8.9       janitor_2.2.1       readxl_1.4.3       
-    ## [19] metafor_4.8-0       numDeriv_2016.8-1.1 metadat_1.4-0      
-    ## [22] Matrix_1.7-1       
+    ##  [1] zcurve_2.4.5        pwr_1.3-0           psych_2.4.12       
+    ##  [4] skimr_2.2.1         naniar_1.1.0        dmetar_0.1.0       
+    ##  [7] ggrepel_0.9.6       devtools_2.4.5      usethis_3.1.0      
+    ## [10] tidyr_1.3.1         dplyr_1.1.4         TOSTER_0.8.3       
+    ## [13] patchwork_1.3.0     ggthemes_5.1.0      ggplot2_3.5.1      
+    ## [16] readr_2.1.5         metaviz_0.3.1       reshape_0.8.9      
+    ## [19] janitor_2.2.1       readxl_1.4.5        metafor_4.6-0      
+    ## [22] numDeriv_2016.8-1.1 metadat_1.2-0       Matrix_1.7-3       
     ## 
     ## loaded via a namespace (and not attached):
-    ##   [1] mathjaxr_1.6-0       jsonlite_1.8.9       rstudioapi_0.17.1   
+    ##   [1] mathjaxr_1.6-0       rstudioapi_0.17.1    jsonlite_1.9.1      
     ##   [4] magrittr_2.0.3       modeltools_0.2-23    farver_2.1.2        
-    ##   [7] nloptr_2.1.1         rmarkdown_2.29       fs_1.6.5            
+    ##   [7] nloptr_2.2.1         rmarkdown_2.29       fs_1.6.5            
     ##  [10] vctrs_0.6.5          memoise_2.0.1        minqa_1.2.8         
-    ##  [13] base64enc_0.1-3      CompQuadForm_1.4.3   htmltools_0.5.8.1   
+    ##  [13] CompQuadForm_1.4.3   base64enc_0.1-3      htmltools_0.5.8.1   
     ##  [16] distributional_0.5.0 cellranger_1.1.0     htmlwidgets_1.6.4   
     ##  [19] plyr_1.8.9           poibin_1.6           lubridate_1.9.4     
-    ##  [22] cachem_1.1.0         igraph_2.1.4         mime_0.12           
-    ##  [25] lifecycle_1.0.4      pkgconfig_2.0.3      R6_2.5.1            
-    ##  [28] fastmap_1.2.0        rbibutils_2.3        shiny_1.10.0        
-    ##  [31] magic_1.6-1          snakecase_0.11.1     digest_0.6.37       
-    ##  [34] colorspace_2.1-1     pkgload_1.4.0        labeling_0.4.3      
-    ##  [37] timechange_0.3.0     abind_1.4-8          compiler_4.4.2      
-    ##  [40] remotes_2.5.0        withr_3.0.2          meta_8.0-2          
-    ##  [43] pkgbuild_1.4.6       MASS_7.3-61          sessioninfo_1.2.3   
-    ##  [46] tools_4.4.2          prabclus_2.3-4       httpuv_1.6.15       
-    ##  [49] visdat_0.6.0         nnet_7.3-19          glue_1.8.0          
-    ##  [52] nlme_3.1-166         promises_1.3.2       grid_4.4.2          
-    ##  [55] cluster_2.1.6        generics_0.1.3       gtable_0.3.6        
-    ##  [58] tzdb_0.4.0           class_7.3-22         hms_1.1.3           
-    ##  [61] xml2_1.3.6           flexmix_2.3-19       pillar_1.10.1       
-    ##  [64] ggdist_3.3.2         stringr_1.5.1        later_1.4.1         
-    ##  [67] robustbase_0.99-4-1  splines_4.4.2        lattice_0.22-6      
-    ##  [70] tidyselect_1.2.1     pbapply_1.7-2        miniUI_0.1.1.1      
-    ##  [73] knitr_1.49           reformulas_0.4.0     gridExtra_2.3       
-    ##  [76] stats4_4.4.2         xfun_0.50            diptest_0.77-1      
-    ##  [79] DEoptimR_1.1-3-1     MuMIn_1.48.4         netmeta_3.1-1       
-    ##  [82] stringi_1.8.4        yaml_2.3.10          boot_1.3-31         
-    ##  [85] evaluate_1.0.3       kernlab_0.9-33       tibble_3.2.1        
-    ##  [88] cli_3.6.3            xtable_1.8-4         Rdpack_2.6.2        
-    ##  [91] repr_1.1.7           munsell_0.5.1        Rcpp_1.0.14         
-    ##  [94] parallel_4.4.2       ellipsis_0.3.2       mclust_6.1.1        
-    ##  [97] profvis_0.4.0        urlchecker_1.0.1     lme4_1.1-36         
-    ## [100] mvtnorm_1.3-3        scales_1.3.0         crayon_1.5.3        
-    ## [103] purrr_1.0.4          fpc_2.2-13           rlang_1.1.5         
-    ## [106] mnormt_2.1.1         cowplot_1.1.3
+    ##  [22] cachem_1.1.0         mime_0.12            lifecycle_1.0.4     
+    ##  [25] pkgconfig_2.0.3      R6_2.6.1             fastmap_1.2.0       
+    ##  [28] rbibutils_2.3        shiny_1.10.0         magic_1.6-1         
+    ##  [31] snakecase_0.11.1     digest_0.6.37        colorspace_2.1-1    
+    ##  [34] pkgload_1.4.0        labeling_0.4.3       timechange_0.3.0    
+    ##  [37] abind_1.4-8          compiler_4.4.3       remotes_2.5.0       
+    ##  [40] withr_3.0.2          meta_8.0-1           pkgbuild_1.4.6      
+    ##  [43] MASS_7.3-65          sessioninfo_1.2.3    tools_4.4.3         
+    ##  [46] prabclus_2.3-4       httpuv_1.6.15        visdat_0.6.0        
+    ##  [49] nnet_7.3-20          glue_1.8.0           nlme_3.1-167        
+    ##  [52] promises_1.3.2       grid_4.4.3           cluster_2.1.8.1     
+    ##  [55] generics_0.1.3       gtable_0.3.6         tzdb_0.5.0          
+    ##  [58] class_7.3-23         hms_1.1.3            xml2_1.3.8          
+    ##  [61] flexmix_2.3-20       pillar_1.10.1        ggdist_3.3.2        
+    ##  [64] stringr_1.5.1        later_1.4.1          robustbase_0.99-4-1 
+    ##  [67] splines_4.4.3        lattice_0.22-6       tidyselect_1.2.1    
+    ##  [70] pbapply_1.7-2        miniUI_0.1.1.1       knitr_1.50          
+    ##  [73] reformulas_0.4.0     gridExtra_2.3        stats4_4.4.3        
+    ##  [76] xfun_0.51            diptest_0.77-1       DEoptimR_1.1-3-1    
+    ##  [79] MuMIn_1.48.4         netmeta_2.9-0        stringi_1.8.4       
+    ##  [82] yaml_2.3.10          boot_1.3-31          evaluate_1.0.3      
+    ##  [85] kernlab_0.9-33       tibble_3.2.1         cli_3.6.4           
+    ##  [88] xtable_1.8-4         Rdpack_2.6.3         repr_1.1.7          
+    ##  [91] munsell_0.5.1        Rcpp_1.0.14          parallel_4.4.3      
+    ##  [94] ellipsis_0.3.2       mclust_6.1.1         profvis_0.4.0       
+    ##  [97] urlchecker_1.0.1     lme4_1.1-36          scales_1.3.0        
+    ## [100] crayon_1.5.3         purrr_1.0.4          fpc_2.2-13          
+    ## [103] rlang_1.1.5          mnormt_2.1.1         cowplot_1.1.3

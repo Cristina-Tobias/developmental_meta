@@ -2,7 +2,7 @@
 title: "A systematic review of short-term and working memory abilities in children with intellectual disability; to what extent do the result support the delay or difference hypotheses? "
 author: "Cris"
 date: "Last Updated: `r format(Sys.time(), '%d, %B, %Y at %H:%M')`"
-output: github_document
+output: md_document
 ---
 
 ```{r import libraries, include=FALSE, warning=FALSE}
@@ -27,6 +27,8 @@ library(naniar)
 library(skimr)
 library(psych)
 library(utils)
+library(pwr)
+library(zcurve)
 ```
 
 ```{r create visualization functions from dsquintana, include=FALSE, warning=FALSE}
@@ -261,6 +263,16 @@ For both groups, we extracted the IQ scores, number of participants, mean and SD
 ```{r descriptives, warning=FALSE}
 missing_data <- vis_miss(data[,columns_of_interest])
 missing_data
+```
+
+```{r power, warning=FALSE}
+
+power_median <- pwr::pwr.t2n.test(n1 = 71, n2 = 62, power = 0.80, sig.level = 0.05, alternative = c("greater")) #taken from the largest study (Palmqvist, 2020) in the Spaniol & Danielsson MA
+
+power_median$d
+
+pam_g <- escalc("SMD1", m1i = 5.9, m2i = 7, sd1i = 2.3, sd2i = 1.8, n1i = 71, n2i = 62) #taken from the Palmqvist (2020) working memory task scores
+
 ```
 
 ### Statistical analysis
@@ -512,13 +524,67 @@ summary(meta_reg)
 ```
 
 
-
 ## Sensitivity analysis
-```{r}
+```{r sensitivity-analysis}
+# Cook's distance
 sens_inh <- cooks.distance.rma.mv(res_inhibition)
-
-
 plot(sens_inh, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
+
+## "leave-one-out" analysis with dfbetas value for dependent effect size multilevel analyses
+loneo <- dfbetas(res_inhibition) %>% as.matrix()
+plot(loneo, type="o", pch=19, xlab="Observed Outcome", ylab="DFBETAS Value")
+
+## sensitivity analysis for the inclusion criteria
+#subgroup analysis (RE meta-analysis of each group)
+stats_test <- stats_test %>% mutate(group_inclusion_criteria = sample(c("group_a","group_b","group_c","group_d"), n(), replace = TRUE))
+
+res_a <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                          subset = group_inclusion_criteria == "group_a",
+                          tdist = TRUE, data = stats_test) # studies reported every participant’s IQ score
+res_b <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                          subset = group_inclusion_criteria == "group_b",
+                          tdist = TRUE, data = stats_test) # studies report the participants have been diagnosed with ID
+res_c <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                          subset = group_inclusion_criteria == "group_c",
+                          tdist = TRUE, data = stats_test) # studies only reports the mean IQ score lower than 60
+res_d <- rma.mv(yi, vi, random = list(~ 1 | effectsize_id, ~1 | study_id),
+                          subset = group_inclusion_criteria == "group_d",
+                          tdist = TRUE, data = stats_test) # studies report ID diagnosis and eligible IQ scores
+
+dat.comp.incl <- data.frame(alloc    = c("group_a", "group_b", "group_c", "group_d"
+                                    ), 
+                       estimate = c(coef(res_a), coef(res_b), coef(res_c), coef(res_d)
+                                    ), 
+                       stderror = c(res_a$se, res_b$se, res_c$se, res_d$se
+                                    ),
+                       tau2     = c(res_a$tau2, res_b$tau2, res_c$tau2, res_d$tau2 
+                                   )
+                       )
+dfround(dat.comp.incl, 3)
+
+```
+
+```{r publication-bias}
+
+# contour enhanced funnel plot, funnel centered at 0
+funnel_data <- funnel(res_inhibition, level=c(90, 95, 99), refline=0, legend=TRUE)
+
+# p-curve, R-Index are calculated in the Shiny App, .csv file with necessary data is on OSF. Link to the p-checker: https://shiny.psy.lmu.de/felix/p-checker/
+
+# z-curve
+zdata <- data.frame(z = stats_test$yi / sqrt(stats_test$vi),
+                    p = 2 * pnorm(-abs(stats_test$yi / sqrt(stats_test$vi))))
+fit <- zcurve(as.numeric(zdata[,"z"]))
+summary(fit)
+plot(fit)
+
+#pet-peese: code modified from https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/pub-bias.html#small-study-effects
+dat.petpeese <- data.frame(TE = stats_test$yi,
+                           seTE_c = sqrt((stats_test$n_id+stats_test$n_magroup)/(stats_test$n_id*stats_test$n_magroup)),
+                           seTE_c2 = (stats_test$n_id+stats_test$n_magroup)/(stats_test$n_id*stats_test$n_magroup))
+
+pet <- rma.mv(TE, seTE_c2, mods = ~seTE_c, data = dat.petpeese, method = "FE")
+peese <- rma.mv(TE, seTE_c2, mods = ~seTE_c2, data = dat.petpeese, method = "FE")
 
 ```
 
