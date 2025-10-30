@@ -877,6 +877,56 @@ Equivalence testing for the different types of tasks.
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
+    meta_reg_prediction <-predict(meta_reg)
+
+      # Add study labels
+      
+    meta_reg_prediction$cite <- paste0(
+      meta_reg$data$cite[!is.na(meta_reg$data$iq_id)], 
+      '.', 
+      ave(meta_reg$data$cite[!is.na(meta_reg$data$iq_id)], 
+          meta_reg$data$cite[!is.na(meta_reg$data$iq_id)], 
+          FUN = seq_along))
+    meta_reg_prediction <- data.frame(meta_reg_prediction)
+
+      meta_reg_prediction <- meta_reg_prediction %>%
+        arrange(pred)
+
+
+      p_right <- ggplot(meta_reg_prediction, aes(y = cite)) +
+        geom_point(aes(x=pred), size = 3, shape=15, color = "darkred") +  
+        geom_errorbarh(aes(xmin = pi.lb, xmax = pi.ub), height = 0.2, color = "grey") +  
+        labs(
+          x = "Prediction",
+          y = "Study",
+          caption = "Error bars represent prediction boundaries"
+        )   + theme(axis.line.y = element_blank(),
+                    axis.ticks.y= element_blank(),
+                    axis.text.y= element_blank(),
+                    axis.title.y= element_blank(),
+                    panel.background = element_rect(fill = "white"
+                    )) + coord_cartesian(xlim = c(min(meta_reg_prediction$pi.lb), max(meta_reg_prediction$pu.ub)), ylim = c(0,dim(meta_reg_prediction)[1] + 1))
+
+    ## Warning in max(meta_reg_prediction$pu.ub): no non-missing arguments to max;
+    ## returning -Inf
+
+      p_left <- ggplot(meta_reg_prediction, aes(y = cite)) + labs(x = '') +
+        geom_text(aes(x = 0, label = cite), hjust = 0, fontface = "bold") +
+        annotate(geom="text", x=0.3, y=dim(meta_reg_prediction)[1] + 1, label="Study", fontface = "bold") +
+        annotate(geom="text", x=1.4, y=dim(meta_reg_prediction)[1] + 1, label="Prediction", fontface = "bold") +
+        theme_void() +
+        coord_cartesian(xlim = c(0, 2), ylim = c(0,dim(meta_reg_prediction)[1] + 1))
+      
+      layout <- c(
+        area(t = 0, l = 0, b = dim(meta_reg_prediction)[1], r = 5), 
+        area(t = 0, l = 6, b = dim(meta_reg_prediction)[1], r = 8) 
+      )
+      print(p_left + p_right + plot_layout(design = layout))
+
+![](README_files/figure-markdown_strict/meta-regression-1.png)
+
+      Sys.sleep(2)
+
 ## Sensitivity analysis
 
     # Cook's distance
@@ -920,10 +970,10 @@ Equivalence testing for the different types of tasks.
     dfround(dat.comp.incl, 3)
 
     ##     alloc estimate stderror tau2
-    ## 1 group_a   -0.073    0.215    0
-    ## 2 group_b   -0.087    0.118    0
-    ## 3 group_c   -0.217    0.262    0
-    ## 4 group_d   -0.059    0.157    0
+    ## 1 group_a   -0.071    0.177    0
+    ## 2 group_b   -0.069    0.166    0
+    ## 3 group_c   -0.176    0.144    0
+    ## 4 group_d   -0.039    0.283    0
 
     # contour enhanced funnel plot, funnel centered at 0
     funnel_data <- funnel(res_inhibition, level=c(90, 95, 99), refline=0, legend=TRUE)
@@ -944,12 +994,12 @@ Equivalence testing for the different types of tasks.
     ## model: EM via EM
     ## 
     ##     Estimate  l.CI  u.CI
-    ## ERR    0.494 0.270 0.707
-    ## EDR    0.106 0.050 0.520
+    ## ERR    0.494 0.257 0.704
+    ## EDR    0.106 0.050 0.377
     ## 
-    ## Model converged in 92 + 358 iterations
+    ## Model converged in 8 + 250 iterations
     ## Fitted using 41 z-values. 99 supplied, 41 significant (ODR = 0.41, 95% CI [0.32, 0.52]).
-    ## Q = -38.48, 95% CI[-51.54, -22.80]
+    ## Q = -38.48, 95% CI[-50.15, -23.02]
 
     plot(fit)
 
