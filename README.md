@@ -842,6 +842,7 @@ Equivalence testing for the different types of tasks.
 
 # Moderator analysis
 
+    stats_test <- stats_test %>% mutate(group_inclusion_criteria = sample(c("group_a","group_b","group_c","group_d"), n(), replace = TRUE))
     meta_reg <- rma(m1i = mean_magroup, sd1i = sd_magroup, n1i = n_magroup,
                     m2i = mean_id, sd2i = sd_id, n2i = n_id, method = "REML", measure = 'SMD1H',
                     mods = ~ iq_id, data=stats_test) #IQ predictor will be mean-centered
@@ -887,45 +888,165 @@ Equivalence testing for the different types of tasks.
       ave(meta_reg$data$cite[!is.na(meta_reg$data$iq_id)], 
           meta_reg$data$cite[!is.na(meta_reg$data$iq_id)], 
           FUN = seq_along))
+    pred_long <- as.list(unclass(meta_reg_prediction))
+
+    meta_reg_prediction[lengths(pred_long)==89]
+
+    ## 
+    ##      pred     se   ci.lb  ci.ub   pi.lb  pi.ub                        cite 
+    ## 1  0.0886 0.1203 -0.1472 0.3244 -1.1900 1.3672       Borella et al. 2013.1 
+    ## 2  0.0886 0.1203 -0.1472 0.3244 -1.1900 1.3672       Borella et al. 2013.2 
+    ## 3  0.0886 0.1203 -0.1472 0.3244 -1.1900 1.3672       Borella et al. 2013.3 
+    ## 5  0.1563 0.1027 -0.0450 0.3577 -1.1164 1.4291    Danielsson et al. 2012.1 
+    ## 6  0.1563 0.1027 -0.0450 0.3577 -1.1164 1.4291    Danielsson et al. 2012.2 
+    ## 7  0.1563 0.1027 -0.0450 0.3577 -1.1164 1.4291    Danielsson et al. 2012.3 
+    ## 8  0.1563 0.1027 -0.0450 0.3577 -1.1164 1.4291    Danielsson et al. 2012.4 
+    ## 9  0.1563 0.1027 -0.0450 0.3577 -1.1164 1.4291    Danielsson et al. 2012.5 
+    ## 10 0.1563 0.1027 -0.0450 0.3577 -1.1164 1.4291    Danielsson et al. 2012.6 
+    ## 11 0.1563 0.1027 -0.0450 0.3577 -1.1164 1.4291    Danielsson et al. 2012.7 
+    ## 16 0.1480 0.0906 -0.0296 0.3255 -1.1212 1.4172        Hooper et al. 2008.3 
+    ## 17 0.1562 0.1026 -0.0448 0.3572 -1.1165 1.4289        Hooper et al. 2008.4 
+    ## 18 0.1573 0.1044 -0.0472 0.3619 -1.1159 1.4306        Hooper et al. 2008.5 
+    ## 19 0.1667 0.1208 -0.0700 0.4034 -1.1121 1.4455         Ikeda et al. 2014.1 
+    ## 20 0.1667 0.1208 -0.0700 0.4034 -1.1121 1.4455         Ikeda et al. 2014.2 
+    ## 21 0.1667 0.1208 -0.0700 0.4034 -1.1121 1.4455         Ikeda et al. 2014.3 
+    ## 22 0.1667 0.1208 -0.0700 0.4034 -1.1121 1.4455         Ikeda et al. 2014.4 
+    ## 23 0.0873 0.1228 -0.1534 0.3280 -1.1923 1.3668    Lanfranchi et al. 2010.1 
+    ## 24 0.0873 0.1228 -0.1534 0.3280 -1.1923 1.3668    Lanfranchi et al. 2010.2 
+    ## 25 0.0873 0.1228 -0.1534 0.3280 -1.1923 1.3668    Lanfranchi et al. 2010.3 
+    ## 30 0.0873 0.1228 -0.1534 0.3280 -1.1923 1.3668    Lanfranchi et al. 2010.8 
+    ## 32 0.1112 0.0856 -0.0566 0.2791 -1.1566 1.3791      Traverso et al. 2018.1 
+    ## 33 0.1112 0.0856 -0.0566 0.2791 -1.1566 1.3791      Traverso et al. 2018.2 
+    ## 34 0.1112 0.0856 -0.0566 0.2791 -1.1566 1.3791      Traverso et al. 2018.3 
+    ## 35 0.1112 0.0856 -0.0566 0.2791 -1.1566 1.3791      Traverso et al. 2018.4 
+    ## 36 0.1198 0.0785 -0.0341 0.2736 -1.1463 1.3859     Palmqvist et al. 2020.1 
+    ## 37 0.1189 0.0790 -0.0359 0.2738 -1.1473 1.3851     Palmqvist et al. 2020.2 
+    ## 38 0.1177 0.0798 -0.0387 0.2741 -1.1487 1.3841     Palmqvist et al. 2020.3 
+    ## 39 0.1439 0.0857 -0.0241 0.3118 -1.1240 1.4117      Costanzo et al. 2013.1 
+    ## 40 0.1439 0.0857 -0.0241 0.3118 -1.1240 1.4117      Costanzo et al. 2013.2 
+    ## 45 0.1439 0.0857 -0.0241 0.3118 -1.1240 1.4117      Costanzo et al. 2013.7 
+    ## 46 0.1439 0.0857 -0.0241 0.3118 -1.1240 1.4117      Costanzo et al. 2013.8 
+    ## 47 0.1439 0.0857 -0.0241 0.3118 -1.1240 1.4117      Costanzo et al. 2013.9 
+    ## 48 0.1439 0.0857 -0.0241 0.3118 -1.1240 1.4117     Costanzo et al. 2013.10 
+    ## 49 0.1439 0.0857 -0.0241 0.3118 -1.1240 1.4117     Costanzo et al. 2013.11 
+    ## 50 0.1439 0.0857 -0.0241 0.3118 -1.1240 1.4117     Costanzo et al. 2013.12 
+    ## 51 0.1450 0.0869 -0.0254 0.3154 -1.1232 1.4132      Menghini et al. 2010.1 
+    ## 52 0.1450 0.0869 -0.0254 0.3154 -1.1232 1.4132      Menghini et al. 2010.2 
+    ## 53 0.1450 0.0869 -0.0254 0.3154 -1.1232 1.4132      Menghini et al. 2010.3 
+    ## 54 0.1450 0.0869 -0.0254 0.3154 -1.1232 1.4132      Menghini et al. 2010.4 
+    ## 59 0.1450 0.0869 -0.0254 0.3154 -1.1232 1.4132      Menghini et al. 2010.9 
+    ## 60 0.1450 0.0869 -0.0254 0.3154 -1.1232 1.4132     Menghini et al. 2010.10 
+    ## 61 0.1450 0.0869 -0.0254 0.3154 -1.1232 1.4132     Menghini et al. 2010.11 
+    ## 62 0.1450 0.0869 -0.0254 0.3154 -1.1232 1.4132     Menghini et al. 2010.12 
+    ## 63 0.1450 0.0869 -0.0254 0.3154 -1.1232 1.4132     Menghini et al. 2010.13 
+    ## 66 0.0199 0.2684 -0.5061 0.5458 -1.3425 1.3822 Van der Molen et al. 2012.1 
+    ## 67 0.0398 0.2230 -0.3973 0.4770 -1.2907 1.3704 Van der Molen et al. 2012.2 
+    ## 68 0.1439 0.0857 -0.0241 0.3118 -1.1240 1.4117         Zigler et al 1962.1 
+    ## 69 0.1476 0.0901 -0.0290 0.3242 -1.1215 1.4167         Zigler et al 1962.2 
+    ## 70 0.1916 0.1711 -0.1438 0.5271 -1.1091 1.4923        Corter et al. 1968.1 
+    ## 75 0.1311 0.0768 -0.0193 0.2815 -1.1346 1.3968         Clunies-Ross 1972.3 
+    ## 82 0.1259 0.0764 -0.0238 0.2756 -1.1397 1.3915         Mento et al. 2019.1 
+    ## 83 0.1108 0.0862 -0.0581 0.2796 -1.1572 1.3788        Carney et al. 2013.1 
+    ## 84 0.1108 0.0862 -0.0581 0.2796 -1.1572 1.3788        Carney et al. 2013.2 
+    ## 85 0.1108 0.0862 -0.0581 0.2796 -1.1572 1.3788        Carney et al. 2013.3 
+    ## 86 0.1108 0.0862 -0.0581 0.2796 -1.1572 1.3788        Carney et al. 2013.4 
+    ## 87 0.1108 0.0862 -0.0581 0.2796 -1.1572 1.3788        Carney et al. 2013.5 
+    ## 88 0.1108 0.0862 -0.0581 0.2796 -1.1572 1.3788        Carney et al. 2013.6 
+    ## 89 0.1312 0.0768 -0.0193 0.2817 -1.1345 1.3969        Carney et al. 2013.7 
+    ## 90 0.1312 0.0768 -0.0193 0.2817 -1.1345 1.3969        Carney et al. 2013.8 
+    ## 95 0.1064 0.0915 -0.0730 0.2857 -1.1631 1.3758       Roberts et al. 2015.1 
+    ## 96 0.0601 0.1783 -0.2893 0.4095 -1.2443 1.3645    Pennington et al. 2003.1 
+    ## 97 0.0601 0.1783 -0.2893 0.4095 -1.2443 1.3645    Pennington et al. 2003.2 
+    ## 98 0.0601 0.1783 -0.2893 0.4095 -1.2443 1.3645    Pennington et al. 2003.3 
+    ## 99 0.0601 0.1783 -0.2893 0.4095 -1.2443 1.3645    Pennington et al. 2003.4
+
     meta_reg_prediction <- data.frame(meta_reg_prediction)
+    meta_reg_prediction$group_inclusion_criteria <- meta_reg$data$group_inclusion_criteria[!is.na(meta_reg$data$iq_id)]
+    meta_reg_prediction$group_id <- meta_reg$data$group_id[!is.na(meta_reg$data$iq_id)]
+    meta_reg_prediction <- meta_reg_prediction %>%
+        mutate(
+          ci_text = paste0("  [", round(ci.lb, 2), ", ", round(ci.ub, 2), "]")
+        )
+    meta_reg_prediction <- meta_reg_prediction %>%
+        mutate(
+          pi_text = paste0(round(pred,2), "  [", round(pi.lb, 2), ", ", round(pi.ub, 2), "]")
+        )
 
-      meta_reg_prediction <- meta_reg_prediction %>%
+
+
+    for (id in c(unique(meta_reg$data$group_id))[1:2]){
+      df <- meta_reg_prediction[meta_reg_prediction$group_id == id,]
+      RE_model <- paste0('RE Model for ', id, ' group')
+      df <- df %>%
         arrange(pred)
+          df <- rbind(df, 
+                    c(as.numeric(id_tests[id,'b']), 
+                      as.numeric(id_tests[id,'se']), 
+                      as.numeric(id_tests[id,'ci.lb']), 
+                      as.numeric(id_tests[id,'ci.ub']),
+                      as.numeric(0), 
+                      as.numeric(0),  
+                      RE_model, 
+                      '',
+                      '',
+                      paste0(round(id_tests[id,'b'], 2), "  [", 
+                             round(id_tests[id,'ci.lb'], 2), 
+                             ", ", 
+                              round(id_tests[id,'ci.ub'], 2), "]"),
+                      ""
+                      ))
 
-
-      p_right <- ggplot(meta_reg_prediction, aes(y = cite)) +
-        geom_point(aes(x=pred), size = 3, shape=15, color = "darkred") +  
-        geom_errorbarh(aes(xmin = pi.lb, xmax = pi.ub), height = 0.2, color = "grey") +  
+      df$desired_order <- seq(dim(df)[1],1)
+      
+      
+      p_right <- ggplot(df, aes(y = reorder(cite, desired_order))) +
+        geom_errorbarh(aes(xmin = as.numeric(pi.lb), xmax = as.numeric(pi.ub)), height = 0.2, color = "darkgrey", size=0.5) +
+        geom_errorbarh(aes(xmin = as.numeric(ci.lb), xmax = as.numeric(ci.ub)), height = 0.5, color = "tomato3", position="dodge",size=1) +
+        geom_point(aes(x=as.numeric(pred)), size = 3, shape=15, color = "darkred") +  
         labs(
           x = "Prediction",
           y = "Study",
-          caption = "Error bars represent prediction boundaries"
+          caption = "Error bars in red represent 95% confidence intervals while grey represents confidence prediction boundaries"
         )   + theme(axis.line.y = element_blank(),
                     axis.ticks.y= element_blank(),
                     axis.text.y= element_blank(),
                     axis.title.y= element_blank(),
                     panel.background = element_rect(fill = "white"
-                    )) + coord_cartesian(xlim = c(min(meta_reg_prediction$pi.lb), max(meta_reg_prediction$pu.ub)), ylim = c(0,dim(meta_reg_prediction)[1] + 1))
+                    )) + coord_cartesian(xlim = c(min(as.numeric(df$pi.lb)), max(as.numeric(df$pi.ub))), ylim = c(0,dim(df)[1] + 1))
 
-    ## Warning in max(meta_reg_prediction$pu.ub): no non-missing arguments to max;
-    ## returning -Inf
 
-      p_left <- ggplot(meta_reg_prediction, aes(y = cite)) + labs(x = '') +
+      p_left <- ggplot(df, aes(y = reorder(cite, desired_order))) + labs(x = '') +
+        
         geom_text(aes(x = 0, label = cite), hjust = 0, fontface = "bold") +
-        annotate(geom="text", x=0.3, y=dim(meta_reg_prediction)[1] + 1, label="Study", fontface = "bold") +
-        annotate(geom="text", x=1.4, y=dim(meta_reg_prediction)[1] + 1, label="Prediction", fontface = "bold") +
+        annotate(geom="text", x=0.1, y=dim(df)[1] + 2, label="Study", fontface = "bold") +
+        
+        geom_text(aes(x = 0.8, label = group_inclusion_criteria), hjust = 0) +
+        annotate(geom="text", x=0.85, y=dim(df)[1] + 2, label="Group Inclusion Criteria", fontface = "bold") +
+        
+        geom_text(
+          aes(x = 1.75, label = ci_text),
+          hjust = 0
+        ) +
+        annotate(geom="text", x=1.85, y=dim(df)[1] + 2, label="Hedges' g [95% CI]", fontface = "bold") +
+        
+        geom_text(
+          aes(x = 1.25, label = pi_text),
+          hjust = 0
+        ) +
+        annotate(geom="text", x=1.35, y=dim(df)[1] + 2, label="Prediction bounds", fontface = "bold") +
+        
         theme_void() +
-        coord_cartesian(xlim = c(0, 2), ylim = c(0,dim(meta_reg_prediction)[1] + 1))
+        coord_cartesian(xlim = c(0, 2), ylim = c(0,dim(df)[1] + 2))
       
       layout <- c(
-        area(t = 0, l = 0, b = dim(meta_reg_prediction)[1], r = 5), 
-        area(t = 0, l = 6, b = dim(meta_reg_prediction)[1], r = 8) 
+        area(t = 0, l = 0, b = dim(df)[1], r = 5), 
+        area(t = 0, l = 6, b = dim(df)[1], r = 8) 
       )
       print(p_left + p_right + plot_layout(design = layout))
-
-![](README_files/figure-markdown_strict/meta-regression-1.png)
-
       Sys.sleep(2)
+    }
+
+![](README_files/figure-markdown_strict/meta-regression-1.png)![](README_files/figure-markdown_strict/meta-regression-2.png)
 
 ## Sensitivity analysis
 
@@ -970,10 +1091,10 @@ Equivalence testing for the different types of tasks.
     dfround(dat.comp.incl, 3)
 
     ##     alloc estimate stderror tau2
-    ## 1 group_a   -0.071    0.177    0
-    ## 2 group_b   -0.069    0.166    0
-    ## 3 group_c   -0.176    0.144    0
-    ## 4 group_d   -0.039    0.283    0
+    ## 1 group_a   -0.147    0.162    0
+    ## 2 group_b   -0.102    0.161    0
+    ## 3 group_c   -0.089    0.192    0
+    ## 4 group_d   -0.029    0.191    0
 
     # contour enhanced funnel plot, funnel centered at 0
     funnel_data <- funnel(res_inhibition, level=c(90, 95, 99), refline=0, legend=TRUE)
@@ -994,12 +1115,12 @@ Equivalence testing for the different types of tasks.
     ## model: EM via EM
     ## 
     ##     Estimate  l.CI  u.CI
-    ## ERR    0.494 0.257 0.704
-    ## EDR    0.106 0.050 0.377
+    ## ERR    0.494 0.267 0.720
+    ## EDR    0.106 0.050 0.278
     ## 
-    ## Model converged in 8 + 250 iterations
+    ## Model converged in 82 + 405 iterations
     ## Fitted using 41 z-values. 99 supplied, 41 significant (ODR = 0.41, 95% CI [0.32, 0.52]).
-    ## Q = -38.48, 95% CI[-50.15, -23.02]
+    ## Q = -38.48, 95% CI[-50.80, -23.51]
 
     plot(fit)
 

@@ -517,6 +517,7 @@ com1
 
 # Moderator analysis
 ```{r meta-regression}
+stats_test <- stats_test %>% mutate(group_inclusion_criteria = sample(c("group_a","group_b","group_c","group_d"), n(), replace = TRUE))
 meta_reg <- rma(m1i = mean_magroup, sd1i = sd_magroup, n1i = n_magroup,
                 m2i = mean_id, sd2i = sd_id, n2i = n_id, method = "REML", measure = 'SMD1H',
                 mods = ~ iq_id, data=stats_test) #IQ predictor will be mean-centered
@@ -532,39 +533,95 @@ meta_reg_prediction$cite <- paste0(
   ave(meta_reg$data$cite[!is.na(meta_reg$data$iq_id)], 
       meta_reg$data$cite[!is.na(meta_reg$data$iq_id)], 
       FUN = seq_along))
+pred_long <- as.list(unclass(meta_reg_prediction))
+
+meta_reg_prediction[lengths(pred_long)==89]
+
 meta_reg_prediction <- data.frame(meta_reg_prediction)
+meta_reg_prediction$group_inclusion_criteria <- meta_reg$data$group_inclusion_criteria[!is.na(meta_reg$data$iq_id)]
+meta_reg_prediction$group_id <- meta_reg$data$group_id[!is.na(meta_reg$data$iq_id)]
+meta_reg_prediction <- meta_reg_prediction %>%
+    mutate(
+      ci_text = paste0("  [", round(ci.lb, 2), ", ", round(ci.ub, 2), "]")
+    )
+meta_reg_prediction <- meta_reg_prediction %>%
+    mutate(
+      pi_text = paste0(round(pred,2), "  [", round(pi.lb, 2), ", ", round(pi.ub, 2), "]")
+    )
 
-  meta_reg_prediction <- meta_reg_prediction %>%
+
+
+for (id in c(unique(meta_reg$data$group_id))[1:2]){
+  df <- meta_reg_prediction[meta_reg_prediction$group_id == id,]
+  RE_model <- paste0('RE Model for ', id, ' group')
+  df <- df %>%
     arrange(pred)
+      df <- rbind(df, 
+                c(as.numeric(id_tests[id,'b']), 
+                  as.numeric(id_tests[id,'se']), 
+                  as.numeric(id_tests[id,'ci.lb']), 
+                  as.numeric(id_tests[id,'ci.ub']),
+                  as.numeric(0), 
+                  as.numeric(0),  
+                  RE_model, 
+                  '',
+                  '',
+                  paste0(round(id_tests[id,'b'], 2), "  [", 
+                         round(id_tests[id,'ci.lb'], 2), 
+                         ", ", 
+                          round(id_tests[id,'ci.ub'], 2), "]"),
+                  ""
+                  ))
 
-
-  p_right <- ggplot(meta_reg_prediction, aes(y = cite)) +
-    geom_point(aes(x=pred), size = 3, shape=15, color = "darkred") +  
-    geom_errorbarh(aes(xmin = pi.lb, xmax = pi.ub), height = 0.2, color = "grey") +  
+  df$desired_order <- seq(dim(df)[1],1)
+  
+  
+  p_right <- ggplot(df, aes(y = reorder(cite, desired_order))) +
+    geom_errorbarh(aes(xmin = as.numeric(pi.lb), xmax = as.numeric(pi.ub)), height = 0.2, color = "darkgrey", size=0.5) +
+    geom_errorbarh(aes(xmin = as.numeric(ci.lb), xmax = as.numeric(ci.ub)), height = 0.5, color = "tomato3", position="dodge",size=1) +
+    geom_point(aes(x=as.numeric(pred)), size = 3, shape=15, color = "darkred") +  
     labs(
       x = "Prediction",
       y = "Study",
-      caption = "Error bars represent prediction boundaries"
+      caption = "Error bars in red represent 95% confidence intervals while grey represents confidence prediction boundaries"
     )   + theme(axis.line.y = element_blank(),
                 axis.ticks.y= element_blank(),
                 axis.text.y= element_blank(),
                 axis.title.y= element_blank(),
                 panel.background = element_rect(fill = "white"
-                )) + coord_cartesian(xlim = c(min(meta_reg_prediction$pi.lb), max(meta_reg_prediction$pu.ub)), ylim = c(0,dim(meta_reg_prediction)[1] + 1))
-  p_left <- ggplot(meta_reg_prediction, aes(y = cite)) + labs(x = '') +
+                )) + coord_cartesian(xlim = c(min(as.numeric(df$pi.lb)), max(as.numeric(df$pi.ub))), ylim = c(0,dim(df)[1] + 1))
+
+
+  p_left <- ggplot(df, aes(y = reorder(cite, desired_order))) + labs(x = '') +
+    
     geom_text(aes(x = 0, label = cite), hjust = 0, fontface = "bold") +
-    annotate(geom="text", x=0.3, y=dim(meta_reg_prediction)[1] + 1, label="Study", fontface = "bold") +
-    annotate(geom="text", x=1.4, y=dim(meta_reg_prediction)[1] + 1, label="Prediction", fontface = "bold") +
+    annotate(geom="text", x=0.1, y=dim(df)[1] + 2, label="Study", fontface = "bold") +
+    
+    geom_text(aes(x = 0.8, label = group_inclusion_criteria), hjust = 0) +
+    annotate(geom="text", x=0.85, y=dim(df)[1] + 2, label="Group Inclusion Criteria", fontface = "bold") +
+    
+    geom_text(
+      aes(x = 1.75, label = ci_text),
+      hjust = 0
+    ) +
+    annotate(geom="text", x=1.85, y=dim(df)[1] + 2, label="Hedges' g [95% CI]", fontface = "bold") +
+    
+    geom_text(
+      aes(x = 1.25, label = pi_text),
+      hjust = 0
+    ) +
+    annotate(geom="text", x=1.35, y=dim(df)[1] + 2, label="Prediction bounds", fontface = "bold") +
+    
     theme_void() +
-    coord_cartesian(xlim = c(0, 2), ylim = c(0,dim(meta_reg_prediction)[1] + 1))
+    coord_cartesian(xlim = c(0, 2), ylim = c(0,dim(df)[1] + 2))
   
   layout <- c(
-    area(t = 0, l = 0, b = dim(meta_reg_prediction)[1], r = 5), 
-    area(t = 0, l = 6, b = dim(meta_reg_prediction)[1], r = 8) 
+    area(t = 0, l = 0, b = dim(df)[1], r = 5), 
+    area(t = 0, l = 6, b = dim(df)[1], r = 8) 
   )
   print(p_left + p_right + plot_layout(design = layout))
   Sys.sleep(2)
-
+}
 
 ```
 
